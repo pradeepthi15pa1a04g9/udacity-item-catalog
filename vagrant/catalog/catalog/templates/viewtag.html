@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Category: {{ tag.name }}</title>
+    </head>
+
+    <body>
+
+        <h1>Category:{{ tag.name }}</h1>
+        <ul>
+        {% for item in tag.items %}
+            <li>
+                <a href="{{ url_for('viewItem', item_name=item.name, item_id=item.id) }}">{{ item.name }}</a>
+                {% if item.tags %}{% set comma = joiner(", ") %}
+                (
+                    {% for tag in item.tags %}
+                        {{- comma() }}<a href="{{ url_for('viewTag', tag_name=tag.name) }}">{{ tag.name }}</a>
+                    {%- endfor %}
+                )
+                {% endif %}
+            </li>
+        {% else %}
+            <li>No items here.</li>
+        {% endfor %}
+        </ul>
+
+    </body>
+
+</html> 

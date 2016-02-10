@@ -10,7 +10,8 @@ def index():
 
 @app.route('/catalog/tags/view/<tag_name>/')
 def viewTag(tag_name):
-    return 'This page shows the items in the category: %s.' % tag_name
+    tag = tags[tag_name]
+    return render_template('viewtag.html', tag=tag)
 
 @app.route('/catalog/items/view/<item_name>-<int:item_id>/')
 def viewItem(item_name, item_id):
@@ -73,29 +74,31 @@ class Item(object):
 items = []
 
 tags = {
-    'cars': Tag('Cars', items),
-    'bikes': Tag('Bikes', items),
-    'boats': Tag('Boats', items),
-    'vehicles': Tag('Vehicles', items),
+    'Cars': Tag('Cars', items),
+    'Bikes': Tag('Bikes', items),
+    'Boats': Tag('Boats', items),
+    'Vehicles': Tag('Vehicles', items),
 }
 
 item1 = Item('Ford Focus', 1)
-item1.addTag('cars')
-item1.addTag('vehicles')
+item1.addTag('Cars')
+item1.addTag('Vehicles')
 items.append(item1)
 
 item2 = Item('Rowing boat', 2)
-item2.addTag('boats')
-item2.addTag('vehicles')
+item2.addTag('Boats')
+item2.addTag('Vehicles')
 items.append(item2)
 
 item3 = Item('BMX', 3)
-item3.addTag('bikes')
-item3.addTag('vehicles')
+item3.addTag('Bikes')
+item3.addTag('Vehicles')
 items.append(item3)
 
 item4 = Item('Skoda', 4)
-item4.addTag('cars')
-item4.addTag('vehicles')
+item4.addTag('Cars')
+item4.addTag('Vehicles')
 items.append(item4)
 
+item5 = Item('Rover the Dog', 5)
+items.append(item5)
