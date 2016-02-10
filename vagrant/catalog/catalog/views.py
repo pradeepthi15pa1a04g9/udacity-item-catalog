@@ -1,5 +1,5 @@
 from . import app
-from flask import render_template
+from flask import render_template, abort
 
 @app.route('/')
 @app.route('/catalog/')
@@ -10,7 +10,10 @@ def index():
 
 @app.route('/catalog/tags/view/<tag_name>/')
 def viewTag(tag_name):
-    tag = tags[tag_name]
+    try:
+        tag = tags[tag_name]
+    except KeyError:
+        abort(404)
     return render_template('viewtag.html', tag=tag)
 
 @app.route('/catalog/items/view/<item_name>-<int:item_id>/')
