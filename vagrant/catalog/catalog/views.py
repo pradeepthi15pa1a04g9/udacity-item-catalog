@@ -1,5 +1,7 @@
+from flask import render_template, abort, request, session
+
 from . import app
-from flask import render_template, abort
+from .forms import NewTagForm
 
 @app.route('/')
 @app.route('/catalog/')
@@ -26,9 +28,12 @@ def viewItem(item_name, item_id):
 
 # Views for creating new data entities
 
-@app.route('/catalog/tags/new/')
+@app.route('/catalog/tags/new/', methods=['GET', 'POST'])
 def newTag():
-    return "This page lets you create a new tag."
+    form = NewTagForm(request.form, meta={'csrf_context': session})
+    if request.method == 'POST' and form.validate():
+        return "No code for handling posted forms yet. Here is the request data:<br><br><pre>%s</pre>" % request.values
+    return render_template('newtagform.html', form=form)
 
 @app.route('/catalog/items/new/')
 def newItem():
@@ -56,7 +61,6 @@ def deleteItem(item_name, item_id):
 
 # Mock up objects to make the templates work.
 # REMOVE ONCE PROPER DATABASE IN PLACE:
-from collections import namedtuple
 
 class Tag(object):
 

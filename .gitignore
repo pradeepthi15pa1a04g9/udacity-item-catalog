@@ -1,3 +1,4 @@
 .vagrant/
 *~
 *.pyc
+vagrant/catalog/instance/
