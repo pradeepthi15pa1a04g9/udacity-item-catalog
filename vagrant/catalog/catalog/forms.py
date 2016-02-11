@@ -10,10 +10,10 @@ class MyBaseForm(Form):
         csrf_secret = app.config['CSRF_SECRET_KEY']
         csrf_time_limit = timedelta(minutes=20)
 
-class NewTagForm(MyBaseForm):
+class TagForm(MyBaseForm):
     tag_name = StringField('Category Name', [validators.Length(min=3, max=25)])
 
-class NewItemForm(MyBaseForm):
+class ItemForm(MyBaseForm):
 	name = StringField('Item Name', [validators.Length(min=3, max=25)])
 	description = TextAreaField('Item Description', [validators.Length(max=200)])
 	tags = SelectMultipleField('Categories')

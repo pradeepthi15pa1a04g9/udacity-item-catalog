@@ -1,7 +1,7 @@
 from flask import render_template, abort, request, session
 
 from . import app
-from .forms import NewTagForm, NewItemForm
+from .forms import TagForm, ItemForm
 
 @app.route('/')
 @app.route('/catalog/')
@@ -30,14 +30,14 @@ def viewItem(item_name, item_id):
 
 @app.route('/catalog/tags/new/', methods=['GET', 'POST'])
 def newTag():
-    form = NewTagForm(request.form, meta={'csrf_context': session})
+    form = TagForm(request.form, meta={'csrf_context': session})
     if request.method == 'POST' and form.validate():
         return "No code for handling posted forms yet. Here is the request data:<br><br><pre>%s</pre>" % request.values
     return render_template('newtagform.html', form=form)
 
 @app.route('/catalog/items/new/', methods=['GET', 'POST'])
 def newItem():
-    form = NewItemForm(request.form, meta={'csrf_context': session})
+    form = ItemForm(request.form, meta={'csrf_context': session})
     form.tags.choices = [(g, g) for g in tags]
     if request.method == 'POST' and form.validate():
         return "No code for handling posted forms yet. Here is the request data:<br><br><pre>%s</pre>" % request.values
