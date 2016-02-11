@@ -1,7 +1,14 @@
 from flask import render_template, abort, request, session
 
 from . import app
+
 from .forms import TagForm, ItemForm
+
+# Imports for dealing with database / models
+from .database import db_session
+from .models import Item, Tag
+
+# View for basic index page
 
 @app.route('/')
 @app.route('/catalog/')
