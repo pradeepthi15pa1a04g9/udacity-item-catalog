@@ -41,7 +41,7 @@ def newItem():
     form.tags.choices = [(g, g) for g in tags]
     if request.method == 'POST' and form.validate():
         return "No code for handling posted forms yet. Here is the request data:<br><br><pre>%s</pre>" % request.values
-    return render_template('newitemform.html', form=form)
+    return render_template('itemform.html', form=form)
 
 # Views for editing existing entities
 
