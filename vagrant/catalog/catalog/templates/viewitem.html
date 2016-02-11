@@ -28,6 +28,8 @@
         {% endfor %}
         </ul>
 
+        <p><a href="{{ url_for('editItem', item_name=item.name, item_id=item_id) }}">Edit</a></p>
+
     </body>
 
 </html> 
