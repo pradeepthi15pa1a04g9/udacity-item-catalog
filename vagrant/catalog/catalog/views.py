@@ -18,7 +18,11 @@ def viewTag(tag_name):
 
 @app.route('/catalog/items/view/<item_name>-<int:item_id>/')
 def viewItem(item_name, item_id):
-    return 'This page shows the item called "%s" with the id %s.' % (item_name, item_id)
+    if item_name in itemindex and itemindex[item_name].id == item_id:
+        item = itemindex[item_name]
+        return render_template('viewitem.html', item=item, item_id=item_id)
+    else:
+        abort(404)
 
 # Views for creating new data entities
 
@@ -66,15 +70,22 @@ class Tag(object):
 
 class Item(object):
 
-    def __init__(self, name, id):
+    def __init__(self, name, id, itemlist, itemindex):
         self.name = name
         self.id = id
         self.tags = []
+        self.itemlist = itemlist
+        self.itemindex = itemindex
+        self.itemlist.append(self)
+        self.itemindex[self.name] = self
+
     def addTag(self, tag_name):
         if tag_name in tags.keys():
             self.tags.append(tags[tag_name])
 
 items = []
+
+itemindex = dict()
 
 tags = {
     'Cars': Tag('Cars', items),
@@ -83,25 +94,22 @@ tags = {
     'Vehicles': Tag('Vehicles', items),
 }
 
-item1 = Item('Ford Focus', 1)
+item1 = Item('Ford Focus', 1, items, itemindex)
 item1.addTag('Cars')
 item1.addTag('Vehicles')
-items.append(item1)
+item1.description = "A really reliable car."
 
-item2 = Item('Rowing boat', 2)
+item2 = Item('Rowing boat', 2, items, itemindex)
 item2.addTag('Boats')
 item2.addTag('Vehicles')
-items.append(item2)
 
-item3 = Item('BMX', 3)
+item3 = Item('BMX', 3, items, itemindex)
 item3.addTag('Bikes')
 item3.addTag('Vehicles')
-items.append(item3)
 
-item4 = Item('Skoda', 4)
+item4 = Item('Skoda', 4, items, itemindex)
 item4.addTag('Cars')
 item4.addTag('Vehicles')
-items.append(item4)
 
-item5 = Item('Rover the Dog', 5)
-items.append(item5)
+item5 = Item('Rover the Dog', 5, items, itemindex)
+item5.description = "A very good dog."
