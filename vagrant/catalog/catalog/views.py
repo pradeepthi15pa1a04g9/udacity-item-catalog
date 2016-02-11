@@ -41,24 +41,36 @@ def newItem():
     form.tags.choices = [(g, g) for g in tags]
     if request.method == 'POST' and form.validate():
         return "No code for handling posted forms yet. Here is the request data:<br><br><pre>%s</pre>" % request.values
-    return render_template('itemform.html', form=form)
+    return render_template('itemform.html', form=form, action='newItem')
 
 # Views for editing existing entities
 
-@app.route('/catalog/tags/edit/<tag_name>/')
+@app.route('/catalog/tags/edit/<tag_name>/', methods=['GET', 'POST'])
 def editTag(tag_name):
     form = TagForm(request.form, meta={'csrf_context': session})
     try:
+        # Prefill details of edited tag
         form.tag_name.data = tags[tag_name].name
     except KeyError:
         abort(404)
     if request.method == 'POST' and form.validate():
         return "No code for handling posted forms yet. Here is the request data:<br><br><pre>%s</pre>" % request.values
-    return render_template('tagform.html', form=form, action="editTag")    
+    return render_template('tagform.html', form=form, action="editTag", tag_name=tag_name)    
 
-@app.route('/catalog/items/edit/<item_name>-<int:item_id>/')
+@app.route('/catalog/items/edit/<item_name>-<int:item_id>/', methods=['GET', 'POST'])
 def editItem(item_name, item_id):
-    return 'This page lets you edit the existing item called "%s" with the id %s.' % (item_name, item_id)
+    item = itemindex[item_name]
+    form = ItemForm(request.form, meta={'csrf_context': session})
+    form.tags.choices = [(g, g) for g in tags]
+    
+    # Prefill details of edited item
+    form.name.data = item.name
+    #form.description.data = item.description
+    form.tags.data = [g.name for g in tags.values() if g in item.tags]
+
+    if request.method == 'POST' and form.validate():
+        return "No code for handling posted forms yet. Here is the request data:<br><br><pre>%s</pre>" % request.values
+    return render_template('itemform.html', form=form, action='editItem', item_name=item_name, item_id=item_id)
 
 # Views for deleting existing entities
 

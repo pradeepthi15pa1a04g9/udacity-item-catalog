@@ -1,13 +1,21 @@
 <!DOCTYPE html>
 <html>
+    
+    {% with %}
+        {% if action == 'newItem' %}
+            {% set title_verb = 'New' %}
+        {% elif action == 'editItem' %}
+            {% set title_verb = 'Edit' %}
+        {% endif %}
     <head>
-        <title>New Item</title>
+        <title>{{ title_verb }} Item</title>
     </head>
 
     <body>
-        <h1>New Item</h1>
+        <h1>{{ title_verb }} Item</h1>
+    {% endwith %}
 
-        <form method="POST" action="{{ url_for('newItem') }}">
+        <form method="POST" action="{% if action == 'newItem' %}{{ url_for('newItem') }}{% elif action == 'editItem' %}{{ url_for('editItem', item_name=item_name, item_id=item_id) }}{% endif %}">
             {{ form.csrf_token }}
             <div>{{ form.name.label }}: {{ form.name }}</div>
             {% if form.name.errors %}

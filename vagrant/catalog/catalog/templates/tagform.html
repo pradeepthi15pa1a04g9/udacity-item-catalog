@@ -14,7 +14,7 @@
         <h1>{{ title_verb }} Category</h1>
     {% endwith %}
 
-        <form method="POST" action="{% if action == 'newTag' %} {{ url_for('newTag') }} {% elif action == 'editTag' %}  {{ url_for('newTag') }} {% endif %}">
+        <form method="POST" action="{% if action == 'newTag' %}{{ url_for('newTag') }}{% elif action == 'editTag' %}{{ url_for('editTag', tag_name=tag_name) }}{% endif %}">
             {{ form.csrf_token }}
             <div>{{ form.tag_name.label }}: {{ form.tag_name }}</div>
             
