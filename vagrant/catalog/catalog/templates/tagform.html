@@ -1,13 +1,20 @@
 <!DOCTYPE html>
 <html>
+    {% with %}
+        {% if action == 'newTag' %}
+            {% set title_verb = 'New' %}
+        {% elif action == 'editTag' %}
+            {% set title_verb = 'Edit' %}
+        {% endif %}
     <head>
-        <title>New Category</title>
+        <title>{{ title_verb }} Category</title>
     </head>
 
     <body>
-        <h1>New Category</h1>
+        <h1>{{ title_verb }} Category</h1>
+    {% endwith %}
 
-        <form method="POST" action="{{ url_for('newTag') }}">
+        <form method="POST" action="{% if action == 'newTag' %} {{ url_for('newTag') }} {% elif action == 'editTag' %}  {{ url_for('newTag') }} {% endif %}">
             {{ form.csrf_token }}
             <div>{{ form.tag_name.label }}: {{ form.tag_name }}</div>
             

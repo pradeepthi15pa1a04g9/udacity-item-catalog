@@ -33,7 +33,7 @@ def newTag():
     form = TagForm(request.form, meta={'csrf_context': session})
     if request.method == 'POST' and form.validate():
         return "No code for handling posted forms yet. Here is the request data:<br><br><pre>%s</pre>" % request.values
-    return render_template('newtagform.html', form=form)
+    return render_template('tagform.html', form=form, action="newTag")
 
 @app.route('/catalog/items/new/', methods=['GET', 'POST'])
 def newItem():
@@ -47,7 +47,14 @@ def newItem():
 
 @app.route('/catalog/tags/edit/<tag_name>/')
 def editTag(tag_name):
-    return "This page lets you edit the existing tag: %s." % tag_name
+    form = TagForm(request.form, meta={'csrf_context': session})
+    try:
+        form.tag_name.data = tags[tag_name].name
+    except KeyError:
+        abort(404)
+    if request.method == 'POST' and form.validate():
+        return "No code for handling posted forms yet. Here is the request data:<br><br><pre>%s</pre>" % request.values
+    return render_template('tagform.html', form=form, action="editTag")    
 
 @app.route('/catalog/items/edit/<item_name>-<int:item_id>/')
 def editItem(item_name, item_id):
