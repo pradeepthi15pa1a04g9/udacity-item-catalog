@@ -1,7 +1,7 @@
 from flask import render_template, abort, request, session
 
 from . import app
-from .forms import NewTagForm
+from .forms import NewTagForm, NewItemForm
 
 @app.route('/')
 @app.route('/catalog/')
@@ -35,9 +35,13 @@ def newTag():
         return "No code for handling posted forms yet. Here is the request data:<br><br><pre>%s</pre>" % request.values
     return render_template('newtagform.html', form=form)
 
-@app.route('/catalog/items/new/')
+@app.route('/catalog/items/new/', methods=['GET', 'POST'])
 def newItem():
-    return "This page lets you create a new item."
+    form = NewItemForm(request.form, meta={'csrf_context': session})
+    form.tags.choices = [(g, g) for g in tags]
+    if request.method == 'POST' and form.validate():
+        return "No code for handling posted forms yet. Here is the request data:<br><br><pre>%s</pre>" % request.values
+    return render_template('newitemform.html', form=form)
 
 # Views for editing existing entities
 

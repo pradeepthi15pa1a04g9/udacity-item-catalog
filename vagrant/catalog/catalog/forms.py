@@ -1,4 +1,4 @@
-from wtforms import Form, StringField, validators
+from wtforms import Form, StringField, SelectMultipleField, TextAreaField, validators
 from wtforms.csrf.session import SessionCSRF
 from datetime import timedelta
 from . import app
@@ -12,3 +12,8 @@ class MyBaseForm(Form):
 
 class NewTagForm(MyBaseForm):
     tag_name = StringField('Category Name', [validators.Length(min=3, max=25)])
+
+class NewItemForm(MyBaseForm):
+	name = StringField('Item Name', [validators.Length(min=3, max=25)])
+	description = TextAreaField('Item Description', [validators.Length(max=200)])
+	tags = SelectMultipleField('Categories')
