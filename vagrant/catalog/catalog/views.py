@@ -72,7 +72,7 @@ def editTag(tag_name):
     elif request.method == 'GET':
         # Prefill details of edited tag
         form.tag_name.data = tag.name
-    return render_template('tagform.html', form=form, action="editTag", tag_name=tag_name)    # TODO: Change to input tag rather than tag name?
+    return render_template('tagform.html', form=form, action="editTag", tag=tag)
 
 @app.route('/catalog/items/edit/<item_name>-<int:item_id>/', methods=['GET', 'POST'])
 def editItem(item_name, item_id):
@@ -92,7 +92,7 @@ def editItem(item_name, item_id):
 
     if request.method == 'POST' and form.validate():
         return "No code for handling posted forms yet. Here is the request data:<br><br><pre>%s</pre>" % request.values
-    return render_template('itemform.html', form=form, action='editItem', item_name=item_name, item_id=item_id) # TODO: change to take item
+    return render_template('itemform.html', form=form, action='editItem', item=item)
 
 # Views for deleting existing entities
 
