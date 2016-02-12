@@ -2,6 +2,7 @@ from flask import (render_template, abort, request, session, redirect,
                    url_for, jsonify)
 from sqlalchemy.orm.exc import MultipleResultsFound, NoResultFound
 from sqlalchemy.exc import IntegrityError
+from werkzeug.contrib.atom import AtomFeed
 
 from . import app
 
@@ -292,3 +293,29 @@ def viewItemJSON(item_name, item_id):
         abort(404)
 
     return jsonify(item.serialize(include_tags=True))
+
+
+# Views for Atom API
+
+@app.route('/catalog/recent.atom')
+def recentAtom():
+    feed = AtomFeed(title="Recent Items",
+                    feed_url=request.url,
+                    url=request.host_url,
+                    subtitle="The most recently created catalog items.",)
+    for item in db_session.query(Item).order_by(Item.updated_on).limit(10):
+        categories = [{'term': tag.name.lower(),
+                       'label': tag.name} for tag in item.tags]
+        feed.add(title=item.name,
+                 url=url_for('viewItem',
+                             item_name=item.name,
+                             item_id=item.id),
+                 updated=item.updated_on,
+                 published=item.created_on,
+                 content_type='text',
+                 content=unicode(item.description),
+                 categories=categories,
+                 author={'name':"Random dude",
+                         'email':'bob@example.com'})
+                         # Replace with user once auth in place
+    return feed.get_response()

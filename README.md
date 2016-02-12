@@ -19,3 +19,6 @@ Third-party code
 --------------
 - The lines in the `Item` model creating the automatically populated and updated `created_on` and `updated_on` columns relies heavily on this Stackoverflow answer:
     + http://stackoverflow.com/a/12155686
+- The Atom feed borrows from the following examples:
+    + http://flask.pocoo.org/snippets/10/
+    + http://werkzeug.pocoo.org/docs/0.11/contrib/atom/
