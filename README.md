@@ -4,7 +4,7 @@ Forked from: udacity/rdb-fullstack
 
 JSON API endpoints
 -------------
-- /catalog.json'
+- /catalog.json
     + Shows information on all tags and all items, referenced from 'Items' and 'Tags' keys
 - /catalog/items.json
     + Shows only the 'Items' portion of the information in /catalog.json
