@@ -3,7 +3,7 @@ from sqlalchemy.orm.exc import MultipleResultsFound, NoResultFound
 
 from . import app
 
-from .forms import TagForm, ItemForm
+from .forms import TagForm, ItemForm, DeleteForm
 
 # Imports for dealing with database / models
 from .database import db_session
@@ -92,15 +92,32 @@ def editItem(item_name, item_id):
 
     if request.method == 'POST' and form.validate():
         return "No code for handling posted forms yet. Here is the request data:<br><br><pre>%s</pre>" % request.values
-    return render_template('itemform.html', form=form, action='editItem', item_name=item_name, item_id=item_id)
+    return render_template('itemform.html', form=form, action='editItem', item_name=item_name, item_id=item_id) # TODO: change to take item
 
 # Views for deleting existing entities
 
-@app.route('/catalog/tags/delete/<tag_name>/')
+@app.route('/catalog/tags/delete/<tag_name>/', methods=['GET', 'POST'])
 def deleteTag(tag_name):
-    return "This page lets you delete the existing tag: %s." % tag_name
+    try:
+        tag = db_session.query(dbTag).filter_by(name=tag_name).one()
+    except (MultipleResultsFound, NoResultFound):
+        abort(404)
 
-@app.route('/catalog/items/delete/<item_name>-<int:item_id>/')
+    form = DeleteForm(request.form, meta={'csrf_context': session})
+
+    if request.method == 'POST' and form.validate():
+        return "No code for handling posted forms yet. Here is the request data:<br><br><pre>%s</pre>" % request.values
+    return render_template('deleteform.html', form=form, action='deleteTag', deleted=tag)
+
+@app.route('/catalog/items/delete/<item_name>-<int:item_id>/', methods=['GET', 'POST'])
 def deleteItem(item_name, item_id):
-    return 'This page lets you delete the existing item called "%s" with the id %s.' % (item_name, item_id)
+    try:
+        item = db_session.query(dbItem).filter_by(name=item_name, id=item_id).one()
+    except (MultipleResultsFound, NoResultFound):
+        abort(404)
 
+    form = DeleteForm(request.form, meta={'csrf_context': session})
+
+    if request.method == 'POST' and form.validate():
+        return "No code for handling posted forms yet. Here is the request data:<br><br><pre>%s</pre>" % request.values
+    return render_template('deleteform.html', form=form, action='deleteItem', deleted=item)

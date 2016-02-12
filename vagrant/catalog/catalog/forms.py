@@ -17,3 +17,6 @@ class ItemForm(MyBaseForm):
 	name = StringField('Item Name', [validators.Length(min=3, max=25)])
 	description = TextAreaField('Item Description', [validators.Length(max=200)])
 	tags = SelectMultipleField('Categories')
+
+class DeleteForm(MyBaseForm):
+    pass

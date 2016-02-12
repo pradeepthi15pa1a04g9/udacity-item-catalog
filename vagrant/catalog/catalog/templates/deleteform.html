@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    
+    {% with %}
+        {% if action == 'deleteItem' %}
+            {% set target_type = 'Item' %}
+        {% elif action == 'deleteTag' %}
+            {% set target_type = 'Tag' %}
+        {% endif %}
+    <head>
+        <title>Delete {{ target_type }}: {{ deleted.name }}?</title>
+    </head>
+
+    <body>
+        <h1>Delete {{ target_type }}: {{ deleted.name }}?</h1>
+    {% endwith %}
+
+        <form method="POST" action="{% if action == 'deleteTag' %}{{ url_for('deleteTag', tag_name=deleted.name) }}{% elif action == 'deleteItem' %}{{ url_for('deleteItem', item_name=deleted.name, item_id=deleted.id) }}{% endif %}">
+            {{ form.csrf_token }}            
+            {% if form.csrf_token.errors %}
+            <div class="warning">You have submitted an invalid CSRF token</div>
+            {% endif %}
+
+            <div><input type="submit" value="Delete"></div>
+        </form>
+
+    </body>
+
+</html> 
