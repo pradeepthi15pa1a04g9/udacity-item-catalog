@@ -119,6 +119,7 @@ def deleteTag(tag_name):
         db_session.delete(tag)
         db_session.commit()
         return redirect(url_for('index'))
+
     return render_template('deleteform.html', form=form, action='deleteTag', deleted=tag)
 
 @app.route('/catalog/items/delete/<item_name>-<int:item_id>/', methods=['GET', 'POST'])
@@ -131,5 +132,8 @@ def deleteItem(item_name, item_id):
     form = DeleteForm(request.form, meta={'csrf_context': session})
 
     if request.method == 'POST' and form.validate():
-        return "No code for handling posted forms yet. Here is the request data:<br><br><pre>%s</pre>" % request.values
+        db_session.delete(item)
+        db_session.commit()
+        return redirect(url_for('index'))
+
     return render_template('deleteform.html', form=form, action='deleteItem', deleted=item)
