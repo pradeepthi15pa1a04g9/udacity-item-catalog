@@ -8,7 +8,7 @@ JSON API endpoints
     + Shows information on all tags and all items, referenced from 'Items' and 'Tags' keys
 - /catalog/items.json
     + Shows only the 'Items' portion of the information in /catalog.json
-- /catalog/tags.json1
+- /catalog/tags.json
     + Shows only the 'Tags' portion of the information in /catalog.json
 - /catalog/tags/view/<tag_name>.json
     + Shows information for the tag with name <tag_name>
