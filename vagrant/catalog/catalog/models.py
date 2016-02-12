@@ -3,6 +3,8 @@ from sqlalchemy.orm import relationship
 
 from .database import Base
 
+# Association table needed to create many-to-many relationship
+# between items and tags
 association_table = Table('item_tag', Base.metadata,
     Column('item_id', Integer, ForeignKey('item.id')),
     Column('tag_id', Integer, ForeignKey('tag.id'))
@@ -16,10 +18,14 @@ class Item(Base):
     description = Column(String(250))
     tags = relationship(
         'Tag',
-        secondary=association_table,
+        # Using secondary means that entries in the association table are
+        # automatically deleted when an tag is removed from an item or an
+        # item is removed from a tag.
+        secondary=association_table, 
         back_populates="items")
 
     def __repr__(self):
+        """Method to provide pretty printing for items"""
         return "<Item: %s>" % self.name
 
 class Tag(Base):
@@ -33,4 +39,5 @@ class Tag(Base):
         back_populates="tags")
 
     def __repr__(self):
+        """Method to provide pretty printing for tags"""
         return "<Tag: %s>" % self.name
