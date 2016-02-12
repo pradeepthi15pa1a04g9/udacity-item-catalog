@@ -10,7 +10,7 @@ JSON API endpoints
     + Shows only the 'Items' portion of the information in /catalog.json
 - /catalog/tags.json
     + Shows only the 'Tags' portion of the information in /catalog.json
-- /catalog/tags/view/<tag_name>.json
+- /catalog/tags/view/\<tag_name>.json
     + Shows information for the tag with name <tag_name>
-- /catalog/items/view/<item_name>-<int:item_id>.json
+- /catalog/items/view/\<item_name>-\<int:item_id>.json
     + Shows information for the tag with the specified name and id
