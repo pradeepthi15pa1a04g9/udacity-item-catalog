@@ -100,12 +100,20 @@ def editItem(item_name, item_id):
     form.tags.choices = [(unicode(g.id), g.name) for g in tags]
 
     if request.method == 'POST' and form.validate():
-        return "No code for handling posted forms yet. Here is the request data:<br><br><pre>%s</pre>" % request.values
+        item.name = form.name.data
+        item.description = form.description.data
+        new_tag_ids = map(int, form.tags.data)
+        new_tags = db_session.query(Tag).filter(Tag.id.in_(new_tag_ids)).all()
+        item.tags = new_tags
+        db_session.commit()
+        return redirect(url_for('viewItem', item_name = item.name, item_id = item.id))
+    
     elif request.method == 'GET':
         # Prefill details of edited item
         form.name.data = item.name
         form.description.data = item.description
         form.tags.data = [unicode(g.id) for g in tags if g in item.tags]
+    
     return render_template('itemform.html', form=form, action='editItem', item=item)
 
 # Views for deleting existing entities
