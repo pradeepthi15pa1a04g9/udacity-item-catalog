@@ -15,6 +15,10 @@ JSON API endpoints
 - /catalog/items/view/\<item_name>-\<int:item_id>.json
     + Shows information for the tag with the specified name and id
 
+Atom Feed
+--------------
+An atom feed of the latest items can be accessed at /catalog/recent.atom .
+
 Third-party code
 --------------
 - The lines in the `Item` model creating the automatically populated and updated `created_on` and `updated_on` columns relies heavily on this Stackoverflow answer:
