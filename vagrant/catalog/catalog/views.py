@@ -78,10 +78,14 @@ def editTag(tag_name):
     form = TagForm(request.form, meta={'csrf_context': session})
     
     if request.method == 'POST' and form.validate():
-        return "No code for handling posted forms yet. Here is the request data:<br><br><pre>%s</pre>" % request.values
+        tag.name = form.tag_name.data
+        db_session.commit()
+        return redirect(url_for('viewTag', tag_name = tag.name))
+
     elif request.method == 'GET':
         # Prefill details of edited tag
         form.tag_name.data = tag.name
+
     return render_template('tagform.html', form=form, action="editTag", tag=tag)
 
 @app.route('/catalog/items/edit/<item_name>-<int:item_id>/', methods=['GET', 'POST'])
@@ -94,14 +98,14 @@ def editItem(item_name, item_id):
     form = ItemForm(request.form, meta={'csrf_context': session})
     tags = db_session.query(Tag).all()
     form.tags.choices = [(unicode(g.id), g.name) for g in tags]
-    
-    # Prefill details of edited item
-    form.name.data = item.name
-    form.description.data = item.description
-    form.tags.data = [unicode(g.id) for g in tags if g in item.tags]
 
     if request.method == 'POST' and form.validate():
         return "No code for handling posted forms yet. Here is the request data:<br><br><pre>%s</pre>" % request.values
+    elif request.method == 'GET':
+        # Prefill details of edited item
+        form.name.data = item.name
+        form.description.data = item.description
+        form.tags.data = [unicode(g.id) for g in tags if g in item.tags]
     return render_template('itemform.html', form=form, action='editItem', item=item)
 
 # Views for deleting existing entities
