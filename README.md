@@ -14,3 +14,8 @@ JSON API endpoints
     + Shows information for the tag with name <tag_name>
 - /catalog/items/view/\<item_name>-\<int:item_id>.json
     + Shows information for the tag with the specified name and id
+
+Third-party code
+--------------
+- The lines in the `Item` model creating the automatically populated and updated `created_on` and `updated_on` columns relies heavily on this Stackoverflow answer:
+    + http://stackoverflow.com/a/12155686

@@ -1,4 +1,5 @@
-from sqlalchemy import Column, ForeignKey, Integer, String, Table
+from sqlalchemy import (Column, ForeignKey, Integer, String, Table, DateTime,
+                        func)
 from sqlalchemy.orm import relationship
 
 from .database import Base
@@ -24,6 +25,12 @@ class Item(Base):
         secondary=association_table, 
         back_populates="items")
 
+    # Columns for atom feed API
+    created_on = Column(DateTime, server_default=func.now())
+    updated_on = Column(DateTime,
+                        server_default=func.now(),
+                        onupdate=func.now())
+
     def __repr__(self):
         """Method to provide pretty printing for items"""
         return "<Item: %s>" % self.name
@@ -34,6 +41,8 @@ class Item(Base):
             'name': self.name,
             'description': self.description,
             'id': self.id,
+            'created_on': self.created_on,
+            'updated_on': self.updated_on,
         }
         if include_tags:
             result['tags'] = [tag.serialize() for tag in self.tags]
