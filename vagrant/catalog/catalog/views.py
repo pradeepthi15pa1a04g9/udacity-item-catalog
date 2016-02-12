@@ -1,4 +1,5 @@
-from flask import render_template, abort, request, session, redirect, url_for
+from flask import (render_template, abort, request, session, redirect,
+                   url_for, jsonify)
 from sqlalchemy.orm.exc import MultipleResultsFound, NoResultFound
 from sqlalchemy.exc import IntegrityError
 
@@ -240,3 +241,54 @@ def deleteItem(item_name, item_id):
                             form=form,
                             action='deleteItem',
                             deleted=item)
+
+
+# Views for JSON API
+
+@app.route('/catalog.json')
+def indexJSON():
+    """View main catalog index as JSON"""
+    tags = db_session.query(Tag).all()
+    items = db_session.query(Item).all()
+    return jsonify(Tags=[tag.serialize(include_items=True) for tag in tags],
+                   Items=[i.serialize(include_tags=True) for i in items])
+
+@app.route('/catalog/tags.json')
+def indexTagsJSON():
+    """View main catalog index as JSON, but only the Tags section"""
+    tags = db_session.query(Tag).all()
+    return jsonify(Tags=[tag.serialize(include_items=True) for tag in tags])
+
+@app.route('/catalog/items.json')
+def indexItemsJSON():
+    """View main catalog index as JSON, but only the Items section"""
+    items = db_session.query(Item).all()
+    return jsonify(Items=[i.serialize(include_tags=True) for i in items])
+
+@app.route('/catalog/tags/view/<tag_name>.json')
+def viewTagJSON(tag_name):
+    """View to allow users to retrieve tag information in JSON format"""
+
+    try:
+        tag = db_session.query(Tag).filter_by(name=tag_name).one()
+    except (MultipleResultsFound, NoResultFound):
+        # If there's more or less than one tag with that name,
+        # throw a 404
+        abort(404) 
+
+    return jsonify(tag.serialize(include_items=True))
+
+@app.route('/catalog/items/view/<item_name>-<int:item_id>.json')
+def viewItemJSON(item_name, item_id):
+    """View to allow users to retrieve information about individual
+    items in JSON."""
+
+    try:
+        item = db_session.query(Item).filter_by(name=item_name,
+                                                id=item_id).one()
+    except (MultipleResultsFound, NoResultFound):
+        # If there are more or less than one item with that name and id
+        # throw a 404
+        abort(404)
+
+    return jsonify(item.serialize(include_tags=True))

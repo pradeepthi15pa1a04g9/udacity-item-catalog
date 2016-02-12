@@ -28,6 +28,17 @@ class Item(Base):
         """Method to provide pretty printing for items"""
         return "<Item: %s>" % self.name
 
+    def serialize(self, include_tags=False):
+        """Returns object data in serializeable format"""
+        result = {
+            'name': self.name,
+            'description': self.description,
+            'id': self.id,
+        }
+        if include_tags:
+            result['tags'] = [tag.serialize() for tag in self.tags]
+        return result
+
 class Tag(Base):
     __tablename__ = 'tag'
 
@@ -41,3 +52,13 @@ class Tag(Base):
     def __repr__(self):
         """Method to provide pretty printing for tags"""
         return "<Tag: %s>" % self.name
+
+    def serialize(self, include_items=False):
+        """Returns object data in serializeable format"""
+        result = {
+            'name': self.name,
+            'id': self.id,
+        }
+        if include_items:
+            result['items'] = [item.serialize() for item in self.items]
+        return result
