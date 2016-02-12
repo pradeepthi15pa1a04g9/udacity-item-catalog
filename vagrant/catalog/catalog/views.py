@@ -1,5 +1,6 @@
 from flask import render_template, abort, request, session, redirect, url_for
 from sqlalchemy.orm.exc import MultipleResultsFound, NoResultFound
+from sqlalchemy.exc import IntegrityError
 
 from . import app
 
@@ -57,11 +58,18 @@ def newTag():
     form = TagForm(request.form, meta={'csrf_context': session})
     
     if request.method == 'POST' and form.validate():
-        new_tag = Tag(name=form.tag_name.data)
-        db_session.add(new_tag)
-        db_session.commit()
-        return redirect(url_for('index'))
-    
+        try:
+            new_tag = Tag(name=form.tag_name.data)
+            db_session.add(new_tag)
+            db_session.commit()
+            return redirect(url_for('index'))
+        except IntegrityError:
+            # If user tries to create a tag with an existing name,
+            # roll back and add a form error
+            db_session.rollback()
+            form.tag_name.errors.append(
+                'A tag already exists with that name.')
+
     return render_template('tagform.html', form=form, action="newTag")
 
 @app.route('/catalog/items/new/', methods=['GET', 'POST'])
@@ -97,6 +105,7 @@ def newItem():
 
     return render_template('itemform.html', form=form, action='newItem')
 
+
 # Views for editing existing entities
 
 @app.route('/catalog/tags/edit/<tag_name>/', methods=['GET', 'POST'])
@@ -114,9 +123,16 @@ def editTag(tag_name):
     form = TagForm(request.form, meta={'csrf_context': session})
     
     if request.method == 'POST' and form.validate():
-        tag.name = form.tag_name.data
-        db_session.commit()
-        return redirect(url_for('viewTag', tag_name = tag.name))
+        try:
+            tag.name = form.tag_name.data
+            db_session.commit()
+            return redirect(url_for('viewTag', tag_name = tag.name))
+        except IntegrityError:
+            # If user tries to edit a tag to have the name of another existing
+            # tag, roll back and add a form error
+            db_session.rollback()
+            form.tag_name.errors.append(
+                'A tag already exists with that name.')
 
     elif request.method == 'GET':
         # For GET request, pre-fill details of edited tag
@@ -126,6 +142,7 @@ def editTag(tag_name):
                            form=form,
                            action="editTag",
                            tag=tag)
+
 
 @app.route('/catalog/items/edit/<item_name>-<int:item_id>/',
            methods=['GET', 'POST'])
