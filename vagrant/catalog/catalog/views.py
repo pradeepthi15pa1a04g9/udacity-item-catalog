@@ -34,7 +34,7 @@ def viewItem(item_name, item_id):
         item = db_session.query(dbItem).filter_by(name=item_name, id=item_id).one()
     except (MultipleResultsFound, NoResultFound):
         abort(404)
-    return render_template('viewitem.html', item=item, item_id=item_id)
+    return render_template('viewitem.html', item=item)
 
 
 # Views for creating new data entities
