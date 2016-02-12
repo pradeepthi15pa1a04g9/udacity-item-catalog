@@ -3,3 +3,6 @@ in ../instance/config.py"""
 
 SECRET_KEY = 'development key'
 CSRF_SECRET_KEY = b'development csrf key'
+
+# Non-standard, specific to this app
+CATALOG_LOGFILE = 'catalog.log'

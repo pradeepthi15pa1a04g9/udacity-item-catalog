@@ -33,7 +33,7 @@ class Item(Base):
 
     def __repr__(self):
         """Method to provide pretty printing for items"""
-        return "<Item: %s>" % self.name
+        return "<Item: name='%s', id=%s>" % (self.name, self.id)
 
     def serialize(self, include_tags=False):
         """Returns object data in serializeable format"""
@@ -60,7 +60,7 @@ class Tag(Base):
 
     def __repr__(self):
         """Method to provide pretty printing for tags"""
-        return "<Tag: %s>" % self.name
+        return "<Tag: name='%s', id=%s>" % (self.name, self.id)
 
     def serialize(self, include_items=False):
         """Returns object data in serializeable format"""

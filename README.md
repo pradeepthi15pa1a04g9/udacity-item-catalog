@@ -19,6 +19,10 @@ Atom Feed
 --------------
 An atom feed of the latest items can be accessed at /catalog/recent.atom .
 
+Logging
+--------------
+Creation, deletion and editing of tags and items is recorded in a log file, configured by default as `catalog.log` in /vagrant/catalog/ .
+
 Third-party code
 --------------
 - The lines in the `Item` model creating the automatically populated and updated `created_on` and `updated_on` columns relies heavily on this Stackoverflow answer:
@@ -26,3 +30,7 @@ Third-party code
 - The Atom feed borrows from the following examples:
     + http://flask.pocoo.org/snippets/10/
     + http://werkzeug.pocoo.org/docs/0.11/contrib/atom/
+- The logging feature was created with help from the following tutorials and examples:
+    + http://flask.pocoo.org/docs/0.10/quickstart/#logging
+    + https://gist.github.com/ibeex/3257877
+    + https://docs.python.org/2/howto/logging.html

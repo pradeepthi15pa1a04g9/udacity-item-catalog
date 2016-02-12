@@ -3,3 +3,4 @@
 *.pyc
 vagrant/catalog/instance/
 *.db
+*.log

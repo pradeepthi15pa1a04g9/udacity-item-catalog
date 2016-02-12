@@ -64,6 +64,12 @@ def newTag():
             new_tag = Tag(name=form.tag_name.data)
             db_session.add(new_tag)
             db_session.commit()
+
+            # Log creation of new tag
+            app.logger.info(
+                "Created {}, user IP address: {}".format(new_tag,
+                                                         request.remote_addr))
+
             return redirect(url_for('index'))
         except IntegrityError:
             # If user tries to create a tag with an existing name,
@@ -103,6 +109,11 @@ def newItem():
         db_session.add(new_item)
         db_session.commit()
 
+        # Log creation of new item
+        app.logger.info(
+            "Created {}, user IP address: {}".format(new_item,
+                                                     request.remote_addr))
+
         return redirect(url_for('index'))
 
     return render_template('itemform.html', form=form, action='newItem')
@@ -128,7 +139,14 @@ def editTag(tag_name):
         try:
             tag.name = form.tag_name.data
             db_session.commit()
+            
+            # Log tag editing
+            app.logger.info(
+                "Edited {}, user IP address: {}".format(tag,
+                                                        request.remote_addr))
+
             return redirect(url_for('viewTag', tag_name = tag.name))
+
         except IntegrityError:
             # If user tries to edit a tag to have the name of another existing
             # tag, roll back and add a form error
@@ -177,6 +195,11 @@ def editItem(item_name, item_id):
         item.description = form.description.data
         db_session.commit()
 
+        # Log item editing
+        app.logger.info(
+            "Edited {}, user IP address: {}".format(item,
+                                                    request.remote_addr))
+
         return redirect(url_for('viewItem',
                                 item_name = item.name,
                                 item_id = item.id))
@@ -211,6 +234,12 @@ def deleteTag(tag_name):
     if request.method == 'POST' and form.validate():
         db_session.delete(tag)
         db_session.commit()
+
+        # Log tag deletion
+        app.logger.info(
+            "Deleted {}, user IP address: {}".format(tag,
+                                                     request.remote_addr))
+
         return redirect(url_for('index'))
 
     return render_template('deleteform.html',
@@ -236,6 +265,12 @@ def deleteItem(item_name, item_id):
     if request.method == 'POST' and form.validate():
         db_session.delete(item)
         db_session.commit()
+
+        # Log item deletion
+        app.logger.info(
+            "Deleted {}, user IP address: {}".format(item,
+                                                    request.remote_addr))
+
         return redirect(url_for('index'))
 
     return render_template('deleteform.html',
