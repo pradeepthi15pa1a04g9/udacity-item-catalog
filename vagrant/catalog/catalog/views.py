@@ -454,7 +454,7 @@ def gconnect():
     output += ' " style = "width: 300px; height: 300px;border-radius: 150px;-webkit-border-radius: 150px;-moz-border-radius: 150px;"> '
     flash("you are now logged in as %s" % session['username'])
     print "done!"
-    response = make_response(output)
+    response = make_response(json.dumps(output))
     response.headers['Content-Type'] = 'application/json'
     return response
 
