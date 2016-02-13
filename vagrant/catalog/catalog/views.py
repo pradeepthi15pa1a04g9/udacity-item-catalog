@@ -381,6 +381,8 @@ def showLogin():
     next = request.values.get('next')
     if not next:
         next = request.referrer
+    if not next:
+        next = url_for('index')
     next = make_url_relative(next)
     form = LoginCSRFForm(request.form, meta={'csrf_context': session})
     return render_template('login.html', form=form, next=next)
