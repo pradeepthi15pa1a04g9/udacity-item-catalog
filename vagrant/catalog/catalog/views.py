@@ -21,7 +21,7 @@ from flask import make_response
 import requests
 
 # Other auth related imports
-from auth_helpers import login_required
+from auth_helpers import login_required, make_url_relative
 
 @app.route('/')
 @app.route('/catalog/')
@@ -376,10 +376,14 @@ CLIENT_ID = json.loads(
         open('instance/client_secrets.json', 'r').read()
     )['web']['client_id']
 
-@app.route('/login')
+@app.route('/login/')
 def showLogin():
+    next = request.values.get('next')
+    if not next:
+        next = request.referrer
+    next = make_url_relative(next)
     form = LoginCSRFForm(request.form, meta={'csrf_context': session})
-    return render_template('login.html', form=form)
+    return render_template('login.html', form=form, next=next)
 
 @app.route('/gconnect', methods=['POST'])
 def gconnect():
