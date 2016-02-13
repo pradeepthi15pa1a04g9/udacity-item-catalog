@@ -31,6 +31,10 @@ class Item(Base):
                         server_default=func.now(),
                         onupdate=func.now())
 
+    # Columns for dealing with authorisation
+    user_id = Column(Integer,ForeignKey('user.id'))
+    user = relationship('User')
+
     def __repr__(self):
         """Method to provide pretty printing for items"""
         return "<Item: name='%s', id=%s>" % (self.name, self.id)
@@ -58,6 +62,10 @@ class Tag(Base):
         secondary=association_table,
         back_populates="tags")
 
+    # Columns for dealing with authorisation
+    user_id = Column(Integer,ForeignKey('user.id'))
+    user = relationship('User')
+
     def __repr__(self):
         """Method to provide pretty printing for tags"""
         return "<Tag: name='%s', id=%s>" % (self.name, self.id)
@@ -71,3 +79,12 @@ class Tag(Base):
         if include_items:
             result['items'] = [item.serialize() for item in self.items]
         return result
+
+
+class User(Base):
+    __tablename__ = "user"
+
+    id = Column(Integer, primary_key = True)
+    name = Column(String(80), nullable = False)
+    email = Column(String(80), nullable = False)
+    picture = Column(String(80))
