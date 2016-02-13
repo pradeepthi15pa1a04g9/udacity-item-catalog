@@ -1,5 +1,5 @@
-from sqlalchemy import (Column, ForeignKey, Integer, String, Table, DateTime,
-                        func)
+from sqlalchemy import (Column, ForeignKey, Integer, String, Boolean
+                        Table, DateTime, func)
 from sqlalchemy.orm import relationship
 
 from .database import Base
@@ -88,3 +88,5 @@ class User(Base):
     name = Column(String(80), nullable = False)
     email = Column(String(80), nullable = False)
     picture = Column(String(80))
+    activated = Column(Boolean, default=True)
+    admin = Column(Boolean, default=False)
