@@ -34,3 +34,6 @@ Third-party code
     + http://flask.pocoo.org/docs/0.10/quickstart/#logging
     + https://gist.github.com/ibeex/3257877
     + https://docs.python.org/2/howto/logging.html
+- The Oauth code takes Udacity code samples as a starting point, but modifed these to use WTForms CSRF features and add other functionality:
+    + https://github.com/udacity/ud330/blob/master/Lesson2/step5/project.py
+    + https://github.com/udacity/ud330/blob/master/Lesson2/step4/templates/login.html
