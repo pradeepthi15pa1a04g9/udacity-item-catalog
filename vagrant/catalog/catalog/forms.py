@@ -26,3 +26,6 @@ class ItemForm(MyBaseForm):
 
 class DeleteForm(MyBaseForm):
     pass
+
+class LoginCSRFForm(MyBaseForm):
+    code = StringField('Code')
