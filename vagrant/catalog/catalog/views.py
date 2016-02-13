@@ -376,6 +376,7 @@ def showLogin():
 
 @app.route('/gconnect', methods=['POST'])
 def gconnect():
+    """View to log in using Google's Oauth2 service"""
     form = LoginCSRFForm(request.form, meta={'csrf_context': session})
     form.validate()
     if form.csrf_token.errors:
@@ -431,7 +432,7 @@ def gconnect():
         return response
 
     # Store the access token in the session for later use.
-    session['credentials'] = credentials.access_token
+    session['access_token'] = credentials.access_token
     session['gplus_id'] = gplus_id
 
     # Get user info
@@ -458,3 +459,34 @@ def gconnect():
     response.headers['Content-Type'] = 'application/json'
     return response
 
+
+@app.route('/gdisconnect')
+def gdisconnect():
+    access_token = session['access_token']
+    print 'In gdisconnect access token is %s', access_token
+    print 'User name is: ' 
+    print session['username']
+    if access_token is None:
+        print 'Access Token is None'
+        response = make_response(json.dumps('Current user not connected.'), 401)
+        response.headers['Content-Type'] = 'application/json'
+        return response
+    url = 'https://accounts.google.com/o/oauth2/revoke?token=%s' % session['access_token']
+    h = httplib2.Http()
+    result = h.request(url, 'GET')[0]
+    print 'result is '
+    print result
+    if result['status'] == '200':
+        del session['access_token'] 
+        del session['gplus_id']
+        del session['username']
+        del session['email']
+        del session['picture']
+        response = make_response(json.dumps('Successfully disconnected.'), 200)
+        response.headers['Content-Type'] = 'application/json'
+        return response
+    else:
+    
+        response = make_response(json.dumps('Failed to revoke token for given user.', 400))
+        response.headers['Content-Type'] = 'application/json'
+        return response

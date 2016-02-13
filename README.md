@@ -37,3 +37,5 @@ Third-party code
 - The Oauth code takes Udacity code samples as a starting point, but modifed these to use WTForms CSRF features and add other functionality:
     + https://github.com/udacity/ud330/blob/master/Lesson2/step5/project.py
     + https://github.com/udacity/ud330/blob/master/Lesson2/step4/templates/login.html
+- The `gdisconnect` view from the Udacity code samples was used in full:
+    + https://github.com/udacity/ud330/blob/master/Lesson2/step6/project.py
