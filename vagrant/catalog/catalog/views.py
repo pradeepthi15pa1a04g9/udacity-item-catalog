@@ -12,7 +12,7 @@ from .forms import TagForm, ItemForm, DeleteForm, LoginCSRFForm
 from .database import db_session
 from .models import Item, Tag
 
-# Imports for oauth
+# Imports for oauth views - gconnect and gdisconnect
 from oauth2client.client import flow_from_clientsecrets
 from oauth2client.client import FlowExchangeError
 import httplib2
@@ -20,7 +20,8 @@ import json
 from flask import make_response
 import requests
 
-# Basic web views
+# Other auth related imports
+from auth_helpers import login_required
 
 @app.route('/')
 @app.route('/catalog/')
@@ -61,6 +62,7 @@ def viewItem(item_name, item_id):
 # Views for creating new data entities
 
 @app.route('/catalog/tags/new/', methods=['GET', 'POST'])
+@login_required
 def newTag():
     """View to provide a form for creating new tags, and to respond
     POST requests from this form."""
@@ -89,6 +91,7 @@ def newTag():
     return render_template('tagform.html', form=form, action="newTag")
 
 @app.route('/catalog/items/new/', methods=['GET', 'POST'])
+@login_required
 def newItem():
     """View to provide a form for creating new items, and to respond
     POST requests from this form."""
@@ -130,6 +133,7 @@ def newItem():
 # Views for editing existing entities
 
 @app.route('/catalog/tags/edit/<tag_name>/', methods=['GET', 'POST'])
+@login_required
 def editTag(tag_name):
     """View to provide a form for editing existing tags, and to
     respond POST requests from this form."""
@@ -174,6 +178,7 @@ def editTag(tag_name):
 
 @app.route('/catalog/items/edit/<item_name>-<int:item_id>/',
            methods=['GET', 'POST'])
+@login_required
 def editItem(item_name, item_id):
     """View to provide a form for editing existing items, and to
     respond POST requests from this form."""
@@ -226,6 +231,7 @@ def editItem(item_name, item_id):
 # Views for deleting existing entities
 
 @app.route('/catalog/tags/delete/<tag_name>/', methods=['GET', 'POST'])
+@login_required
 def deleteTag(tag_name):
     """View to provide a form for deleting existing tags, and to
     respond POST requests from this form."""
@@ -257,6 +263,7 @@ def deleteTag(tag_name):
 
 @app.route('/catalog/items/delete/<item_name>-<int:item_id>/',
            methods=['GET', 'POST'])
+@login_required
 def deleteItem(item_name, item_id):
     """View to provide a form for deleting existing items, and to
     respond POST requests from this form."""

@@ -39,3 +39,5 @@ Third-party code
     + https://github.com/udacity/ud330/blob/master/Lesson2/step4/templates/login.html
 - The `gdisconnect` view from the Udacity code samples was used in full:
     + https://github.com/udacity/ud330/blob/master/Lesson2/step6/project.py
+- The `login_required` decorator in the `auth_helpers` module is based on the example in this tutorial:
+    + http://flask.pocoo.org/docs/0.10/patterns/viewdecorators/
