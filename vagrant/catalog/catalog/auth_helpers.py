@@ -5,8 +5,11 @@ from urlparse import urlparse, urljoin
 
 from models import User, Tag, Item
 
+# Decorators
 
 def login_required(f):
+    """Decorator to require login for a view and refirect
+    non-logged-in user to login page"""
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if 'username' not in session:
@@ -15,6 +18,7 @@ def login_required(f):
     return decorated_function
 
 def activated_user_required(login_session, db_session):
+    """Decorator to stop deactivated users from viewing a page"""
     def decorator(f):
         @wraps(f)
         def decorated_function(*args, **kwargs):
@@ -29,12 +33,6 @@ def activated_user_required(login_session, db_session):
 
         return decorated_function
     return decorator
-
-def make_url_relative(url_or_path):
-    result = urlparse(url_or_path).path
-    if not result:
-        result = '/'
-    return result
 
 def owner_only(login_session, db_session, object_class):
     """Decorator to protect edit and delete views from non-owners of the relevant object.
@@ -86,3 +84,12 @@ def admin_only(login_session, db_session):
 
         return decorated_function
     return decorator
+
+# Helper functions
+
+def make_url_relative(url_or_path):
+    """Make an inputed URL or path into a relative url"""
+    result = urlparse(url_or_path).path
+    if not result:
+        result = '/'
+    return result
