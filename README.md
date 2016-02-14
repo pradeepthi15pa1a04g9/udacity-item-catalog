@@ -41,3 +41,5 @@ Third-party code
     + https://github.com/udacity/ud330/blob/master/Lesson2/step6/project.py
 - The `login_required` decorator in the `auth_helpers` module is based on the example in this tutorial:
     + http://flask.pocoo.org/docs/0.10/patterns/viewdecorators/
+- Used Udacity class methods `getByID`, `getIDByEmail` and `createForID` are based on the helper functions `getUserInfo`, `getUserId` and `createUSer` in:
+    + https://github.com/udacity/ud330/blob/master/Lesson3/step2Quiz/project.py

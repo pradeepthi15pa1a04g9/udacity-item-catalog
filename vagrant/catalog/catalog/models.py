@@ -90,3 +90,26 @@ class User(Base):
     picture = Column(String(80))
     activated = Column(Boolean, default=True)
     admin = Column(Boolean, default=False)
+
+    @classmethod
+    def getByID(cls, user_id, db_session):
+        user = db_session.query(cls).filter_by(id=user_id).one()
+        return user
+
+    @classmethod
+    def getIDByEmail(cls, email, db_session):
+        try:
+            user = db_session.query(cls).filter_by(email=email).one()
+            return user.id
+        except:
+            return None
+
+    @classmethod
+    def createForID(cls, login_session, db_session):
+        newUser = cls(name=login_session['username'],
+                       email=login_session['email'],
+                       picture=login_session['picture'])
+        db_session.add(newUser)
+        db_session.commit()
+        user = db_session.query(cls).filter_by(email=login_session['email']).one()
+        return user.id

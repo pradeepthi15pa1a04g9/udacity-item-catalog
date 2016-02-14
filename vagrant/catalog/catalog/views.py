@@ -10,7 +10,7 @@ from .forms import TagForm, ItemForm, DeleteForm, LoginCSRFForm
 
 # Imports for dealing with database / models
 from .database import db_session
-from .models import Item, Tag
+from .models import Item, Tag, User
 
 # Imports for oauth views - gconnect and gdisconnect
 from oauth2client.client import flow_from_clientsecrets
@@ -21,7 +21,7 @@ from flask import make_response
 import requests
 
 # Other auth related imports
-from auth_helpers import login_required, make_url_relative
+from auth_helpers import login_required, make_url_relative, owner_only
 
 @app.route('/')
 @app.route('/catalog/')
@@ -71,7 +71,8 @@ def newTag():
     
     if request.method == 'POST' and form.validate():
         try:
-            new_tag = Tag(name=form.tag_name.data)
+            new_tag = Tag(name=form.tag_name.data,
+                          user_id=session['user_id'])
             db_session.add(new_tag)
             db_session.commit()
 
@@ -116,7 +117,8 @@ def newItem():
         # Create new item using this information.
         new_item = Item(name = form.name.data,
                         description=form.description.data,
-                        tags=item_tags)
+                        tags=item_tags,
+                        user_id=session['user_id'])
         db_session.add(new_item)
         db_session.commit()
 
@@ -134,6 +136,7 @@ def newItem():
 
 @app.route('/catalog/tags/edit/<tag_name>/', methods=['GET', 'POST'])
 @login_required
+@owner_only(session, db_session, Tag)
 def editTag(tag_name):
     """View to provide a form for editing existing tags, and to
     respond POST requests from this form."""
@@ -179,6 +182,7 @@ def editTag(tag_name):
 @app.route('/catalog/items/edit/<item_name>-<int:item_id>/',
            methods=['GET', 'POST'])
 @login_required
+@owner_only(session, db_session, Item)
 def editItem(item_name, item_id):
     """View to provide a form for editing existing items, and to
     respond POST requests from this form."""
@@ -232,6 +236,7 @@ def editItem(item_name, item_id):
 
 @app.route('/catalog/tags/delete/<tag_name>/', methods=['GET', 'POST'])
 @login_required
+@owner_only(session, db_session, Tag)
 def deleteTag(tag_name):
     """View to provide a form for deleting existing tags, and to
     respond POST requests from this form."""
@@ -264,6 +269,7 @@ def deleteTag(tag_name):
 @app.route('/catalog/items/delete/<item_name>-<int:item_id>/',
            methods=['GET', 'POST'])
 @login_required
+@owner_only(session, db_session, Item)
 def deleteItem(item_name, item_id):
     """View to provide a form for deleting existing items, and to
     respond POST requests from this form."""
@@ -459,6 +465,12 @@ def gconnect():
     session['picture'] = data['picture']
     session['email'] = data['email']
 
+    # See if user exists in database, otherwise add them
+    user_id = User.getIDByEmail(session['email'], db_session)
+    if not user_id:
+        user_id = User.createForID(session, db_session)
+    session['user_id'] = user_id
+
     output = ''
     output += '<h1>Welcome, '
     output += session['username']
@@ -495,6 +507,7 @@ def gdisconnect():
         del session['username']
         del session['email']
         del session['picture']
+        del session['user_id']
         response = make_response(json.dumps('Successfully disconnected.'), 200)
         response.headers['Content-Type'] = 'application/json'
         return response
