@@ -69,3 +69,7 @@ Third-party code
     + http://flask.pocoo.org/docs/0.10/patterns/viewdecorators/
 - Used Udacity class methods `getByID`, `getIDByEmail` and `createForID` are based on the helper functions `getUserInfo`, `getUserId` and `createUSer` in:
     + https://github.com/udacity/ud330/blob/master/Lesson3/step2Quiz/project.py
+- The basic Bootstrap template is adapted from here:
+    + http://getbootstrap.com/examples/theme/
+- The form styling is based on this Bootstrap tutorial:
+    + http://getbootstrap.com/css/#forms
