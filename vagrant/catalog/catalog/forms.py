@@ -18,11 +18,12 @@ class TagForm(MyBaseForm):
                            [validators.Length(min=3, max=25)])
 
 class ItemForm(MyBaseForm):
-	name = StringField('Item Name',
-                        [validators.Length(min=3, max=25)])
-	description = TextAreaField('Item Description',
+    name = StringField('Item Name',
+                       [validators.Length(min=3, max=25)])
+    description = TextAreaField('Item Description',
                                 [validators.Length(max=200)])
-	tags = SelectMultipleField('Categories')
+    picture_url = StringField('Picture URL', [validators.URL(),])
+    tags = SelectMultipleField('Categories')
 
 class BlankForm(MyBaseForm):
     """A form with no fields, used for delete confirmations and others

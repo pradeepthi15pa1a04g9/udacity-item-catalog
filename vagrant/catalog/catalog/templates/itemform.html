@@ -27,6 +27,11 @@
                 <ul class="errors">{% for error in form.description.errors %}<li>{{ error }}</li>{% endfor %}</ul>
             {% endif %}
 
+            <div>{{ form.picture_url.label }}: {{ form.picture_url }}</div>
+            {% if form.picture_url.errors %}
+                <ul class="errors">{% for error in form.picture_url.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+            {% endif %}
+
             <div>{{ form.tags.label }}: {{ form.tags }}</div>
             
             

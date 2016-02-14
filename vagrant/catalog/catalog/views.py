@@ -160,6 +160,7 @@ def newItem():
         new_item = Item(name = form.name.data,
                         description=form.description.data,
                         tags=item_tags,
+                        picture_url=form.picture_url.data,
                         user_id=session['user_id'])
         db_session.add(new_item)
         db_session.commit()
@@ -254,6 +255,7 @@ def editItem(item_name, item_id):
         item.tags = new_tags
         item.name = form.name.data
         item.description = form.description.data
+        item.picture_url = form.picture_url.data
         db_session.commit()
 
         # Log item editing

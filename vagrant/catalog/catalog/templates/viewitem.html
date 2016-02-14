@@ -19,6 +19,18 @@
 
         {% endif %}
 
+        <h2>Picture</h2>
+
+        {% if item.picture_url %}
+
+        <p><img src="{{ item.picture_url }}"></p>
+
+        {% else %}
+
+        <p>No image.</p>
+
+        {% endif %}
+
         <h2>Categories</h2>
         <ul>
         {% for tag in item.tags %}
