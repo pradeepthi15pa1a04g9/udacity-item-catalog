@@ -17,6 +17,7 @@
                     <td>email</td>
                     <td>admin</td>
                     <td>activated</td>
+                    <td></td>
                 </tr>
             </thead>
             {% for user in users %}
@@ -26,6 +27,13 @@
                     <td>{{ user.email }}</td>
                     <td>{{ user.admin }}</td>
                     <td>{{ user.activated }}</td>
+                    <td>
+                        {% if user.activated %}
+                        <a href="{{ url_for('user_activation', user_id=user.id) }}">Deactivate</a>
+                        {% else %}
+                        <a href="{{ url_for('user_activation', user_id=user.id) }}">Activate</a>
+                        {% endif %}
+                    </td>
                 </tr>
             {% endfor %}
         </table>

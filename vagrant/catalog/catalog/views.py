@@ -549,3 +549,9 @@ def gdisconnect():
 def admin():
     users = db_session.query(User).all()
     return render_template('admin.html', users=users)
+
+@app.route('/admin/activation/<int:user_id>/')
+@login_required
+@admin_only(session, db_session)
+def user_activation(user_id):
+    return "User activation page for user with id: %s" % user_id
