@@ -9,7 +9,7 @@
     <meta name="author" content="">
     <link rel="icon" href="">
 
-    <title>Theme Template for Bootstrap</title>
+    <title>Bootstrap mockup</title>
 
     <!-- Bootstrap core CSS -->
     <!-- Latest compiled and minified CSS -->
@@ -69,12 +69,128 @@
 
     <div class="container theme-showcase" role="main">
 
+        <div class="row">
+            <div class="col-md-4">
+
+                <div class="page-header">
+                    <h1>Categories</h1>
+                </div>
+
+                
+                <p><a href="http://localhost:5000/catalog/tags/new/" class="btn btn-primary">New Category</a></p>
+                
+
+                <ul>
+                
+                    <li><a href="http://localhost:5000/catalog/tags/view/Books/">Books</a></li>
+                
+                    <li><a href="http://localhost:5000/catalog/tags/view/Novels/">Novels</a></li>
+                
+                    <li><a href="http://localhost:5000/catalog/tags/view/Non-fiction/">Non-fiction</a></li>
+                
+                    <li><a href="http://localhost:5000/catalog/tags/view/Furniture/">Furniture</a></li>
+                
+                    <li><a href="http://localhost:5000/catalog/tags/view/Cars/">Cars</a></li>
+                
+                    <li><a href="http://localhost:5000/catalog/tags/view/Vehicles/">Vehicles</a></li>
+                
+                    <li><a href="http://localhost:5000/catalog/tags/view/Boats/">Boats</a></li>
+                
+                </ul>
+            </div>
+            <div class="col-md-8">
+                <div class="page-header">
+                    <h1>Items</h1>
+                </div>
+
+        
+                <p><a href="http://localhost:5000/catalog/items/new/" class="btn btn-primary">New Item</a></p>
+                
+
+                <ul>
+                
+                    <li>
+                        <a href="http://localhost:5000/catalog/items/view/Dictionary-1/">Dictionary</a>
+                        
+                        (
+                            <a href="http://localhost:5000/catalog/tags/view/Books/">Books</a>, <a href="http://localhost:5000/catalog/tags/view/Non-fiction/">Non-fiction</a>
+                        )
+                        
+                    </li>
+                
+                    <li>
+                        <a href="http://localhost:5000/catalog/items/view/Chair-2/">Chair</a>
+                        
+                        (
+                            <a href="http://localhost:5000/catalog/tags/view/Furniture/">Furniture</a>
+                        )
+                        
+                    </li>
+                
+                    <li>
+                        <a href="http://localhost:5000/catalog/items/view/Coffee%20table-3/">Coffee table</a>
+                        
+                        (
+                            <a href="http://localhost:5000/catalog/tags/view/Furniture/">Furniture</a>
+                        )
+                        
+                    </li>
+                
+                    <li>
+                        <a href="http://localhost:5000/catalog/items/view/Landrover-4/">Landrover</a>
+                        
+                        (
+                            <a href="http://localhost:5000/catalog/tags/view/Cars/">Cars</a>, <a href="http://localhost:5000/catalog/tags/view/Vehicles/">Vehicles</a>
+                        )
+                        
+                    </li>
+                
+                    <li>
+                        <a href="http://localhost:5000/catalog/items/view/Sailing%20Boat-5/">Sailing Boat</a>
+                        
+                        (
+                            <a href="http://localhost:5000/catalog/tags/view/Vehicles/">Vehicles</a>, <a href="http://localhost:5000/catalog/tags/view/Boats/">Boats</a>
+                        )
+                        
+                    </li>
+                
+                    <li>
+                        <a href="http://localhost:5000/catalog/items/view/Pride%20and%20Prejudice-6/">Pride and Prejudice</a>
+                        
+                        (
+                            <a href="http://localhost:5000/catalog/tags/view/Books/">Books</a>, <a href="http://localhost:5000/catalog/tags/view/Novels/">Novels</a>
+                        )
+                        
+                    </li>
+                
+                    <li>
+                        <a href="http://localhost:5000/catalog/items/view/Wolf%20Hall-7/">Wolf Hall</a>
+                        
+                        (
+                            <a href="http://localhost:5000/catalog/tags/view/Books/">Books</a>, <a href="http://localhost:5000/catalog/tags/view/Novels/">Novels</a>
+                        )
+                        
+                    </li>
+                
+                    <li>
+                        <a href="http://localhost:5000/catalog/items/view/Bike-8/">Bike</a>
+                        
+                        (
+                            <a href="http://localhost:5000/catalog/tags/view/Vehicles/">Vehicles</a>
+                        )
+                        
+                    </li>
+                
+                </ul>
+            </div>
+        </div>
+
         <div class="page-header">
             <h1>Categories</h1>
         </div>
 
         
-        <p><a href="http://localhost:5000/catalog/tags/new/">New Category</a></p>
+        <p><a href="http://localhost:5000/catalog/tags/new/" class="btn btn-primary">New Category</a></p>
         
 
         <ul>
@@ -95,10 +211,11 @@
         
         </ul>
 
-        <h1>Items</h1>
-
+        <div class="page-header">
+            <h1>Items</h1>
+        </div>
         
-        <p><a href="http://localhost:5000/catalog/items/new/">New Item</a></p>
+        <p><a href="http://localhost:5000/catalog/items/new/" class="btn btn-primary">New Item</a></p>
         
 
         <ul>
@@ -183,21 +300,21 @@
 
         <form method="POST" action="http://localhost:5000/catalog/items/new/">
             <input id="csrf_token" name="csrf_token" type="hidden" value="20160214165217##312265eb47e6e7fd329bd0301fcac3068f2245d7">
-            <div><label for="name">Item Name</label>: <input id="name" name="name" type="text" value=""></div>
+            <div class="form-group"><label for="name">Item Name</label>: <input id="name" name="name" class="form-control" type="text" value=""></div>
             
             
-            <div><label for="description">Item Description</label>: <textarea id="description" name="description"></textarea></div>
-            
-
-            <div><label for="picture_url">Picture URL</label>: <input id="picture_url" name="picture_url" type="text" value=""></div>
+            <div class="form-group"><label for="description">Item Description</label>: <textarea id="description" name="description" class="form-control"></textarea></div>
             
 
-            <div><label for="tags">Categories</label>: <select id="tags" multiple="" name="tags"><option value="1">Books</option><option value="2">Novels</option><option value="3">Non-fiction</option><option value="4">Furniture</option><option value="5">Cars</option><option value="6">Vehicles</option><option value="7">Boats</option></select></div>
+            <div class="form-group"><label for="picture_url">Picture URL</label>: <input id="picture_url" name="picture_url" type="text" class="form-control" value=""></div>
+            
+
+            <div class="form-group"><label for="tags">Categories</label>: <select id="tags" multiple="" name="tags" class="form-control"><option value="1">Books</option><option value="2">Novels</option><option value="3">Non-fiction</option><option value="4">Furniture</option><option value="5">Cars</option><option value="6">Vehicles</option><option value="7">Boats</option></select></div>
             
             
             
 
-            <div><input type="submit" value="Submit"></div>
+            <div><input type="submit" value="Submit" class="btn btn-default"></div>
         </form>
 
 
@@ -207,7 +324,7 @@
 
         <h2>Users</h2>
 
-        <table border="1">
+        <table class="table table-striped">
             <thead>
                 <tr>
                     <td>id</td>
@@ -223,7 +340,17 @@
                 <tr>
                     <td>1</td>
                     <td>Sam Frances</td>
-                    <td>samuel.oscar.frances@gmail.com</td>
+                    <td>example@example.com</td>
+                    <td>True</td>
+                    <td>True</td>
+                    <td>
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Bob Smith</td>
+                    <td>example2@example.com</td>
                     <td>True</td>
                     <td>True</td>
                     <td>
