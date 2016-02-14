@@ -17,6 +17,7 @@ class Item(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String(250), nullable=False)
     description = Column(String(250))
+    picture_url = Column(String(250))
     tags = relationship(
         'Tag',
         # Using secondary means that entries in the association table are
