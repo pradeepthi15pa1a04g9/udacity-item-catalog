@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<!-- saved from url=(0040)http://localhost:5000/catalog/items/new/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>New Item</title>
+    </head>
+
+    <body>
+        <h1>New Item</h1>
+    
+
+        <form method="POST" action="http://localhost:5000/catalog/items/new/">
+            <input id="csrf_token" name="csrf_token" type="hidden" value="20160214165217##312265eb47e6e7fd329bd0301fcac3068f2245d7">
+            <div><label for="name">Item Name</label>: <input id="name" name="name" type="text" value=""></div>
+            
+            
+            <div><label for="description">Item Description</label>: <textarea id="description" name="description"></textarea></div>
+            
+
+            <div><label for="picture_url">Picture URL</label>: <input id="picture_url" name="picture_url" type="text" value=""></div>
+            
+
+            <div><label for="tags">Categories</label>: <select id="tags" multiple="" name="tags"><option value="1">Books</option><option value="2">Novels</option><option value="3">Non-fiction</option><option value="4">Furniture</option><option value="5">Cars</option><option value="6">Vehicles</option><option value="7">Boats</option></select></div>
+            
+            
+            
+
+            <div><input type="submit" value="Submit"></div>
+        </form>
+
+    
+
+ </body></html>
