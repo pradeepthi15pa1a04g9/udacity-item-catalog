@@ -37,14 +37,13 @@ if __name__ == "__main__":
     if not decision.startswith("y"):
         print "Aborting"
         exit()
-
-    if command == "grant":
-        priv = True
-    else:
-        priv = False
     
     for user in users:
-        user.admin = priv
+        if command == "grant":
+            user.admin = True
+            user.activated = True
+        else:
+            user.admin = False
 
     db_session.commit()
 

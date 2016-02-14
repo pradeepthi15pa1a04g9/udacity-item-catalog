@@ -561,6 +561,10 @@ def user_activation(user_id):
         # throw a 404.
         abort(404)
 
+    # If user is an admin, then you aren't allowed to activate/deactivate them.
+    if user.admin:
+        abort(403)
+
     form = BlankForm(request.form, meta={'csrf_context': session})
 
     # Determine whether form should activate or deactivate user

@@ -29,10 +29,12 @@
                     <td>{{ user.admin }}</td>
                     <td>{{ user.activated }}</td>
                     <td>
-                        {% if user.activated %}
-                        <a href="{{ url_for('user_activation', user_id=user.id) }}">Deactivate</a>
-                        {% else %}
-                        <a href="{{ url_for('user_activation', user_id=user.id) }}">Activate</a>
+                        {% if not user.admin %}
+                            {% if user.activated %}
+                            <a href="{{ url_for('user_activation', user_id=user.id) }}">Deactivate</a>
+                            {% else %}
+                            <a href="{{ url_for('user_activation', user_id=user.id) }}">Activate</a>
+                            {% endif %}
                         {% endif %}
                     </td>
                 </tr>
