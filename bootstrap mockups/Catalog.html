@@ -43,25 +43,13 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Bootstrap theme</a>
+          <a class="navbar-brand" href="#">Item Catalog App</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li class="active"><a href="#">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li role="separator" class="divider"></li>
-                <li class="dropdown-header">Nav header</li>
-                <li><a href="#">Separated link</a></li>
-                <li><a href="#">One more separated link</a></li>
-              </ul>
-            </li>
+            <li><a href="#about">Admin</a></li>
+            <li><a href="#contact">Logout</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -70,7 +58,7 @@
     <div class="container theme-showcase" role="main">
 
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-3">
 
                 <div class="page-header">
                     <h1>Categories</h1>
@@ -98,7 +86,7 @@
                 
                 </ul>
             </div>
-            <div class="col-md-8">
+            <div class="col-md-9">
                 <div class="page-header">
                     <h1>Items</h1>
                 </div>
@@ -186,113 +174,22 @@
         </div>
 
         <div class="page-header">
-            <h1>Categories</h1>
+            <h1>Bicycle</h1>
         </div>
-
-        
-        <p><a href="http://localhost:5000/catalog/tags/new/" class="btn btn-primary">New Category</a></p>
-        
-
-        <ul>
-        
-            <li><a href="http://localhost:5000/catalog/tags/view/Books/">Books</a></li>
-        
-            <li><a href="http://localhost:5000/catalog/tags/view/Novels/">Novels</a></li>
-        
-            <li><a href="http://localhost:5000/catalog/tags/view/Non-fiction/">Non-fiction</a></li>
-        
-            <li><a href="http://localhost:5000/catalog/tags/view/Furniture/">Furniture</a></li>
-        
-            <li><a href="http://localhost:5000/catalog/tags/view/Cars/">Cars</a></li>
-        
-            <li><a href="http://localhost:5000/catalog/tags/view/Vehicles/">Vehicles</a></li>
-        
-            <li><a href="http://localhost:5000/catalog/tags/view/Boats/">Boats</a></li>
-        
-        </ul>
-
-        <div class="page-header">
-            <h1>Items</h1>
+        <div class="row">            
+            <div class="col-md-4">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Left_side_of_Flying_Pigeon.jpg/300px-Left_side_of_Flying_Pigeon.jpg" class="img-responsive img-rounded">
+            </div>
+            <div class="col-md-8">
+                <p>
+                    <a href="#" class="label label-info">Vehicles</a>
+                    <a href="#" class="label label-info">Toys</a>
+                    <a href="#" class="label label-info">Household items</a>
+                </p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                <p><a href="#" class="btn btn-primary">Edit</a> <a href="#" class="btn btn-primary">Delete</a></p>
+            </div>
         </div>
-        
-        <p><a href="http://localhost:5000/catalog/items/new/" class="btn btn-primary">New Item</a></p>
-        
-
-        <ul>
-        
-            <li>
-                <a href="http://localhost:5000/catalog/items/view/Dictionary-1/">Dictionary</a>
-                
-                (
-                    <a href="http://localhost:5000/catalog/tags/view/Books/">Books</a>, <a href="http://localhost:5000/catalog/tags/view/Non-fiction/">Non-fiction</a>
-                )
-                
-            </li>
-        
-            <li>
-                <a href="http://localhost:5000/catalog/items/view/Chair-2/">Chair</a>
-                
-                (
-                    <a href="http://localhost:5000/catalog/tags/view/Furniture/">Furniture</a>
-                )
-                
-            </li>
-        
-            <li>
-                <a href="http://localhost:5000/catalog/items/view/Coffee%20table-3/">Coffee table</a>
-                
-                (
-                    <a href="http://localhost:5000/catalog/tags/view/Furniture/">Furniture</a>
-                )
-                
-            </li>
-        
-            <li>
-                <a href="http://localhost:5000/catalog/items/view/Landrover-4/">Landrover</a>
-                
-                (
-                    <a href="http://localhost:5000/catalog/tags/view/Cars/">Cars</a>, <a href="http://localhost:5000/catalog/tags/view/Vehicles/">Vehicles</a>
-                )
-                
-            </li>
-        
-            <li>
-                <a href="http://localhost:5000/catalog/items/view/Sailing%20Boat-5/">Sailing Boat</a>
-                
-                (
-                    <a href="http://localhost:5000/catalog/tags/view/Vehicles/">Vehicles</a>, <a href="http://localhost:5000/catalog/tags/view/Boats/">Boats</a>
-                )
-                
-            </li>
-        
-            <li>
-                <a href="http://localhost:5000/catalog/items/view/Pride%20and%20Prejudice-6/">Pride and Prejudice</a>
-                
-                (
-                    <a href="http://localhost:5000/catalog/tags/view/Books/">Books</a>, <a href="http://localhost:5000/catalog/tags/view/Novels/">Novels</a>
-                )
-                
-            </li>
-        
-            <li>
-                <a href="http://localhost:5000/catalog/items/view/Wolf%20Hall-7/">Wolf Hall</a>
-                
-                (
-                    <a href="http://localhost:5000/catalog/tags/view/Books/">Books</a>, <a href="http://localhost:5000/catalog/tags/view/Novels/">Novels</a>
-                )
-                
-            </li>
-        
-            <li>
-                <a href="http://localhost:5000/catalog/items/view/Bike-8/">Bike</a>
-                
-                (
-                    <a href="http://localhost:5000/catalog/tags/view/Vehicles/">Vehicles</a>
-                )
-                
-            </li>
-        
-        </ul>
 
         <div class="page-header">
             <h1>New Item</h1>
@@ -300,16 +197,21 @@
 
         <form method="POST" action="http://localhost:5000/catalog/items/new/">
             <input id="csrf_token" name="csrf_token" type="hidden" value="20160214165217##312265eb47e6e7fd329bd0301fcac3068f2245d7">
-            <div class="form-group"><label for="name">Item Name</label>: <input id="name" name="name" class="form-control" type="text" value=""></div>
+            <div class="form-group"><label for="name" class="control-label">Item Name</label>: <input id="name" name="name" class="form-control" type="text" value=""></div>
             
             
-            <div class="form-group"><label for="description">Item Description</label>: <textarea id="description" name="description" class="form-control"></textarea></div>
-            
-
-            <div class="form-group"><label for="picture_url">Picture URL</label>: <input id="picture_url" name="picture_url" type="text" class="form-control" value=""></div>
+            <div class="form-group"><label for="description" class="control-label">Item Description</label>: <textarea id="description" name="description" class="form-control"></textarea></div>
             
 
-            <div class="form-group"><label for="tags">Categories</label>: <select id="tags" multiple="" name="tags" class="form-control"><option value="1">Books</option><option value="2">Novels</option><option value="3">Non-fiction</option><option value="4">Furniture</option><option value="5">Cars</option><option value="6">Vehicles</option><option value="7">Boats</option></select></div>
+            <div class="form-group has-error has-feedback"><label for="picture_url" class="control-label">Picture URL</label>: <input id="picture_url" name="picture_url" type="text" class="form-control" value="">
+            <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+            <span class="control-label">
+                Error message.
+            </span>
+            </div>
+            
+
+            <div class="form-group"><label for="tags" class="control-label">Categories</label>: <select id="tags" multiple="" name="tags" class="form-control"><option value="1">Books</option><option value="2">Novels</option><option value="3">Non-fiction</option><option value="4">Furniture</option><option value="5">Cars</option><option value="6">Vehicles</option><option value="7">Boats</option></select></div>
             
             
             
