@@ -14,6 +14,22 @@ def login_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
+def activated_user_required(login_session, db_session):
+    def decorator(f):
+        @wraps(f)
+        def decorated_function(*args, **kwargs):
+            logged_in_user_id = login_session['user_id']
+            logged_in_user = db_session.query(User).filter_by(id=logged_in_user_id).one()
+
+            # Check if user is activated and throw 403 if not
+            if logged_in_user.activated:
+                return f(*args, **kwargs)
+            else:
+                abort(403)
+
+        return decorated_function
+    return decorator
+
 def make_url_relative(url_or_path):
     result = urlparse(url_or_path).path
     if not result:

@@ -22,7 +22,7 @@ import requests
 
 # Other auth related imports
 from auth_helpers import (login_required, make_url_relative, owner_only,
-                          admin_only)
+                          admin_only, activated_user_required)
 
 @app.route('/')
 @app.route('/catalog/')
@@ -30,7 +30,16 @@ def index():
     """View to provide a main index page for our site"""
     tags = db_session.query(Tag).all()
     items = db_session.query(Item).all()
-    return render_template('catalog.html', tags=tags, items=items)
+
+    # Check if user logged in
+    logged_in = 'user_id' in session
+
+    # If logged in, check if activated:
+    user = None
+    if logged_in:
+        user = db_session.query(User).filter_by(id=session['user_id']).one()
+
+    return render_template('catalog.html', tags=tags, items=items, logged_in=logged_in, user=user)
 
 # Views for viewing data in web page form
 
@@ -45,6 +54,9 @@ def viewTag(tag_name):
         # throw a 404
         abort(404)
     
+    # Check if user logged in
+    logged_in = 'user_id' in session
+
     # Determine if logged in user is owner of tag
     if tag.user_id == session.get('user_id'):
         owner = True
@@ -52,11 +64,11 @@ def viewTag(tag_name):
         owner = False
 
     # Determine if logged in user is an admin
+    user = None
     if session.get('user_id'):
-        admin = User.getByID(session.get('user_id'), db_session).admin
-        print "Admin: %s" % admin
+        user = User.getByID(session.get('user_id'), db_session)
 
-    return render_template('viewtag.html', tag=tag, owner=owner, admin=admin)
+    return render_template('viewtag.html', tag=tag, logged_in=logged_in, owner=owner, user=user)
 
 @app.route('/catalog/items/view/<item_name>-<int:item_id>/')
 def viewItem(item_name, item_id):
@@ -70,6 +82,9 @@ def viewItem(item_name, item_id):
         # throw a 404
         abort(404)
 
+    # Check if user logged in
+    logged_in = 'user_id' in session
+
     # Determine if logged in user is owner of item
     if item.user_id == session.get('user_id'):
         owner = True
@@ -77,17 +92,18 @@ def viewItem(item_name, item_id):
         owner = False
 
     # Determine if logged in user is an admin
+    user = None
     if session.get('user_id'):
-        admin = User.getByID(session.get('user_id'), db_session).admin
-        print "Admin: %s" % admin
+        user = User.getByID(session.get('user_id'), db_session)
 
-    return render_template('viewitem.html', item=item, owner=owner, admin=admin)
+    return render_template('viewitem.html', item=item, logged_in=logged_in, owner=owner, user=user)
 
 
 # Views for creating new data entities
 
 @app.route('/catalog/tags/new/', methods=['GET', 'POST'])
 @login_required
+@activated_user_required(session, db_session)
 def newTag():
     """View to provide a form for creating new tags, and to respond
     POST requests from this form."""
@@ -118,6 +134,7 @@ def newTag():
 
 @app.route('/catalog/items/new/', methods=['GET', 'POST'])
 @login_required
+@activated_user_required(session, db_session)
 def newItem():
     """View to provide a form for creating new items, and to respond
     POST requests from this form."""
@@ -162,6 +179,7 @@ def newItem():
 @app.route('/catalog/tags/edit/<tag_name>/', methods=['GET', 'POST'])
 @login_required
 @owner_only(session, db_session, Tag)
+@activated_user_required(session, db_session)
 def editTag(tag_name):
     """View to provide a form for editing existing tags, and to
     respond POST requests from this form."""
@@ -208,6 +226,7 @@ def editTag(tag_name):
            methods=['GET', 'POST'])
 @login_required
 @owner_only(session, db_session, Item)
+@activated_user_required(session, db_session)
 def editItem(item_name, item_id):
     """View to provide a form for editing existing items, and to
     respond POST requests from this form."""
@@ -262,6 +281,7 @@ def editItem(item_name, item_id):
 @app.route('/catalog/tags/delete/<tag_name>/', methods=['GET', 'POST'])
 @login_required
 @owner_only(session, db_session, Tag)
+@activated_user_required(session, db_session)
 def deleteTag(tag_name):
     """View to provide a form for deleting existing tags, and to
     respond POST requests from this form."""
@@ -295,6 +315,7 @@ def deleteTag(tag_name):
            methods=['GET', 'POST'])
 @login_required
 @owner_only(session, db_session, Item)
+@activated_user_required(session, db_session)
 def deleteItem(item_name, item_id):
     """View to provide a form for deleting existing items, and to
     respond POST requests from this form."""
