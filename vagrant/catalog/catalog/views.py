@@ -42,8 +42,15 @@ def viewTag(tag_name):
     except (MultipleResultsFound, NoResultFound):
         # If there's more or less than one tag with that name,
         # throw a 404
-        abort(404) 
-    return render_template('viewtag.html', tag=tag)
+        abort(404)
+    
+    # Determine if logged in user is owner of tag
+    if tag.user_id == session.get('user_id'):
+        owner = True
+    else:
+        owner = False
+
+    return render_template('viewtag.html', tag=tag, owner=owner)
 
 @app.route('/catalog/items/view/<item_name>-<int:item_id>/')
 def viewItem(item_name, item_id):
@@ -56,7 +63,14 @@ def viewItem(item_name, item_id):
         # If there are more or less than one item with that name and id
         # throw a 404
         abort(404)
-    return render_template('viewitem.html', item=item)
+
+    # Determine if logged in user is owner of item
+    if item.user_id == session.get('user_id'):
+        owner = True
+    else:
+        owner = False
+
+    return render_template('viewitem.html', item=item, owner=owner)
 
 
 # Views for creating new data entities
