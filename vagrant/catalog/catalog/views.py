@@ -547,4 +547,5 @@ def gdisconnect():
 @login_required
 @admin_only(session, db_session)
 def admin():
-    return "admin page"
+    users = db_session.query(User).all()
+    return render_template('admin.html', users=users)
