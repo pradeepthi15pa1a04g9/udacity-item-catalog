@@ -6,7 +6,7 @@ from werkzeug.contrib.atom import AtomFeed
 
 from . import app
 
-from .forms import TagForm, ItemForm, DeleteForm, LoginCSRFForm
+from .forms import TagForm, ItemForm, BlankForm, LoginCSRFForm
 
 # Imports for dealing with database / models
 from .database import db_session
@@ -273,7 +273,7 @@ def deleteTag(tag_name):
         # throw a 404.
         abort(404)
 
-    form = DeleteForm(request.form, meta={'csrf_context': session})
+    form = BlankForm(request.form, meta={'csrf_context': session})
 
     if request.method == 'POST' and form.validate():
         db_session.delete(tag)
@@ -306,7 +306,7 @@ def deleteItem(item_name, item_id):
         # throw a 404.
         abort(404)
 
-    form = DeleteForm(request.form, meta={'csrf_context': session})
+    form = BlankForm(request.form, meta={'csrf_context': session})
 
     if request.method == 'POST' and form.validate():
         db_session.delete(item)
@@ -550,8 +550,33 @@ def admin():
     users = db_session.query(User).all()
     return render_template('admin.html', users=users)
 
-@app.route('/admin/activation/<int:user_id>/')
+@app.route('/admin/activation/<int:user_id>/', methods=['POST', 'GET'])
 @login_required
 @admin_only(session, db_session)
 def user_activation(user_id):
-    return "User activation page for user with id: %s" % user_id
+    try:
+        user = db_session.query(User).filter_by(id=user_id).one()
+    except (MultipleResultsFound, NoResultFound):
+        # If there are more or less than one items with this name and id,
+        # throw a 404.
+        abort(404)
+
+    form = BlankForm(request.form, meta={'csrf_context': session})
+
+    # Determine whether form should activate or deactivate user
+    if user.activated:
+        action = "deactivate"
+    else:
+        action = "activate"
+
+    if request.method == 'POST' and form.validate():
+        # Toggle user activation
+        user.activated = not user.activated
+        db_session.commit()
+
+        return redirect(url_for('admin'))
+
+    return render_template('activationform.html',
+                            form=form,
+                            action=action,
+                            user=user)

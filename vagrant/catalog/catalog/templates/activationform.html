@@ -1,15 +1,26 @@
 <!DOCTYPE html>
 <html>
+
     <head>
-        <title>Admin</title>
+        <title>{{ action|capitalize() }} user: {{ user.name }}?</title>
     </head>
 
     <body>
-        <h1>Admin</h1>
+        <h1>{{ action|capitalize() }} user: {{ user.name }}?</h1>
 
-        <h2>Users</h2>
+        <form method="POST" action="{{ url_for('user_activation', user_id=user.id) }}">
+            {{ form.csrf_token }}            
+            {% if form.csrf_token.errors %}
+            <div class="warning">You have submitted an invalid CSRF token</div>
+            {% endif %}
 
-        <table border="1">
+            <div><input type="submit" value="{{ action|capitalize() }}"></div>
+
+        </form>
+
+        <h2> User info </h2>
+
+         <table border="1">
             <thead>
                 <tr>
                     <td>id</td>
@@ -17,26 +28,16 @@
                     <td>email</td>
                     <td>admin</td>
                     <td>activated</td>
-                    <td></td>
                 </tr>
             </thead>
             <tbody>
-            {% for user in users %}
                 <tr>
                     <td>{{ user.id }}</td>
                     <td>{{ user.name }}</td>
                     <td>{{ user.email }}</td>
                     <td>{{ user.admin }}</td>
                     <td>{{ user.activated }}</td>
-                    <td>
-                        {% if user.activated %}
-                        <a href="{{ url_for('user_activation', user_id=user.id) }}">Deactivate</a>
-                        {% else %}
-                        <a href="{{ url_for('user_activation', user_id=user.id) }}">Activate</a>
-                        {% endif %}
-                    </td>
                 </tr>
-            {% endfor %}
             </tbody>
         </table>
 

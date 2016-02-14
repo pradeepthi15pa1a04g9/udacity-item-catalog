@@ -21,6 +21,11 @@ if __name__ == "__main__":
     
     users = db_session.query(User).filter_by(email=email_address).all()
 
+    if not len(users):
+        print "No users found with that email address."
+        print "Goodbye."
+        exit()
+
     print "Found the following users:"
     print
     for user in users:

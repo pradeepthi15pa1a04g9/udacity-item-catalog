@@ -24,8 +24,12 @@ class ItemForm(MyBaseForm):
                                 [validators.Length(max=200)])
 	tags = SelectMultipleField('Categories')
 
-class DeleteForm(MyBaseForm):
+class BlankForm(MyBaseForm):
+    """A form with no fields, used for delete confirmations and others
+    forms with only a submit button"""
     pass
+
+
 
 class LoginCSRFForm(MyBaseForm):
     code = StringField('Code')
