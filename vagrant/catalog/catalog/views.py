@@ -271,6 +271,7 @@ def editItem(item_name, item_id):
         # For GET requests, pre-fill details of edited item
         form.name.data = item.name
         form.description.data = item.description
+        form.picture_url.data = item.picture_url
         form.tags.data = [unicode(g.id) for g in tags if g in item.tags]
     
     return render_template('itemform.html',
