@@ -21,7 +21,8 @@ def make_url_relative(url_or_path):
     return result
 
 def owner_only(login_session, db_session, object_class):
-    """Decorator to protect edit and delete views from non-owners of the relevant object"""
+    """Decorator to protect edit and delete views from non-owners of the relevant object.
+    Applied after login_required decorator, as assumes user is logged in."""
     def decorator(f):
         @wraps(f)
         def decorated_function(*args, **kwargs):
@@ -50,5 +51,22 @@ def owner_only(login_session, db_session, object_class):
                 abort(403)
 
             return f(*args, **kwargs)
+        return decorated_function
+    return decorator
+
+def admin_only(login_session, db_session):
+    """Decorator to protect admin pages from non-admins. Assumes user is logged in."""
+    def decorator(f):
+        @wraps(f)
+        def decorated_function(*args, **kwargs):
+            logged_in_user_id = login_session['user_id']
+            
+            # Check if admin, in which case let through
+            logged_in_user = db_session.query(User).filter_by(id=logged_in_user_id).one()
+            if logged_in_user.admin:
+                return f(*args, **kwargs)
+            else:
+                abort(403)
+
         return decorated_function
     return decorator

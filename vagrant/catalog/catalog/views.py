@@ -21,7 +21,8 @@ from flask import make_response
 import requests
 
 # Other auth related imports
-from auth_helpers import login_required, make_url_relative, owner_only
+from auth_helpers import (login_required, make_url_relative, owner_only,
+                          admin_only)
 
 @app.route('/')
 @app.route('/catalog/')
@@ -540,3 +541,10 @@ def gdisconnect():
         response = make_response(json.dumps('Failed to revoke token for given user.', 400))
         response.headers['Content-Type'] = 'application/json'
         return response
+
+# Admin section
+@app.route('/admin/')
+@login_required
+@admin_only(session, db_session)
+def admin():
+    return "admin page"
