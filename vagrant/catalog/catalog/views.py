@@ -102,7 +102,7 @@ def viewItem(item_name, item_id):
 # Views for creating new data entities
 
 @app.route('/catalog/tags/new/', methods=['GET', 'POST'])
-@login_required
+@login_required(session)
 @activated_user_required(session, db_session)
 def newTag():
     """View to provide a form for creating new tags, and to respond
@@ -133,7 +133,7 @@ def newTag():
     return render_template('tagform.html', form=form, action="newTag")
 
 @app.route('/catalog/items/new/', methods=['GET', 'POST'])
-@login_required
+@login_required(session)
 @activated_user_required(session, db_session)
 def newItem():
     """View to provide a form for creating new items, and to respond
@@ -177,7 +177,7 @@ def newItem():
 # Views for editing existing entities
 
 @app.route('/catalog/tags/edit/<tag_name>/', methods=['GET', 'POST'])
-@login_required
+@login_required(session)
 @owner_only(session, db_session, Tag)
 @activated_user_required(session, db_session)
 def editTag(tag_name):
@@ -224,7 +224,7 @@ def editTag(tag_name):
 
 @app.route('/catalog/items/edit/<item_name>-<int:item_id>/',
            methods=['GET', 'POST'])
-@login_required
+@login_required(session)
 @owner_only(session, db_session, Item)
 @activated_user_required(session, db_session)
 def editItem(item_name, item_id):
@@ -279,7 +279,7 @@ def editItem(item_name, item_id):
 # Views for deleting existing entities
 
 @app.route('/catalog/tags/delete/<tag_name>/', methods=['GET', 'POST'])
-@login_required
+@login_required(session)
 @owner_only(session, db_session, Tag)
 @activated_user_required(session, db_session)
 def deleteTag(tag_name):
@@ -313,7 +313,7 @@ def deleteTag(tag_name):
 
 @app.route('/catalog/items/delete/<item_name>-<int:item_id>/',
            methods=['GET', 'POST'])
-@login_required
+@login_required(session)
 @owner_only(session, db_session, Item)
 @activated_user_required(session, db_session)
 def deleteItem(item_name, item_id):
@@ -565,14 +565,14 @@ def gdisconnect():
 
 # Admin section
 @app.route('/admin/')
-@login_required
+@login_required(session)
 @admin_only(session, db_session)
 def admin():
     users = db_session.query(User).all()
     return render_template('admin.html', users=users)
 
 @app.route('/admin/activation/<int:user_id>/', methods=['POST', 'GET'])
-@login_required
+@login_required(session)
 @admin_only(session, db_session)
 def user_activation(user_id):
     try:

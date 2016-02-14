@@ -1,5 +1,5 @@
 from functools import wraps
-from flask import session, url_for, redirect, url_for, request, abort
+from flask import url_for, redirect, url_for, request, abort
 from sqlalchemy.orm.exc import MultipleResultsFound, NoResultFound
 from urlparse import urlparse, urljoin
 
@@ -7,15 +7,17 @@ from models import User, Tag, Item
 
 # Decorators
 
-def login_required(f):
+def login_required(login_session):
     """Decorator to require login for a view and refirect
     non-logged-in user to login page"""
-    @wraps(f)
-    def decorated_function(*args, **kwargs):
-        if 'username' not in session:
-            return redirect(url_for('showLogin', next=make_url_relative(request.url)))
-        return f(*args, **kwargs)
-    return decorated_function
+    def decorator(f):
+        @wraps(f)
+        def decorated_function(*args, **kwargs):
+            if 'username' not in login_session:
+                return redirect(url_for('showLogin', next=make_url_relative(request.url)))
+            return f(*args, **kwargs)
+        return decorated_function
+    return decorator
 
 def activated_user_required(login_session, db_session):
     """Decorator to stop deactivated users from viewing a page"""
