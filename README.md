@@ -2,6 +2,26 @@ udacity-item-catalog
 =============
 Forked from: udacity/rdb-fullstack
 
+Admin script
+-------------
+Admin users can edit and delete any item or category. To make a user into an admin, use the script `make_admin.py` in `/vagrant/catalog`, specifying either `revoke` or `grant` and the email address of the relevant user, and then follow the prompts. For example:
+
+```
+vagrant@vagrant-ubuntu-trusty-32:/vagrant/catalog$ python make_admin.py grant example@example.com
+Looking for a user with email address: example@example.com
+Found the following users:
+
+<User: name='Bob Example', email='example@example.com', id=2, activated=True, admin=False>
+
+Grant admin privileges? (y/n): y
+Admin privileges changed.
+
+<User: name='Bob Example', email='example@example.com', id=2, activated=True, admin=True>
+
+Goodbye
+
+```
+
 JSON API endpoints
 -------------
 - /catalog.json

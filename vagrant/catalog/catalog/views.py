@@ -50,7 +50,12 @@ def viewTag(tag_name):
     else:
         owner = False
 
-    return render_template('viewtag.html', tag=tag, owner=owner)
+    # Determine if logged in user is an admin
+    if session.get('user_id'):
+        admin = User.getByID(session.get('user_id'), db_session).admin
+        print "Admin: %s" % admin
+
+    return render_template('viewtag.html', tag=tag, owner=owner, admin=admin)
 
 @app.route('/catalog/items/view/<item_name>-<int:item_id>/')
 def viewItem(item_name, item_id):
@@ -70,7 +75,12 @@ def viewItem(item_name, item_id):
     else:
         owner = False
 
-    return render_template('viewitem.html', item=item, owner=owner)
+    # Determine if logged in user is an admin
+    if session.get('user_id'):
+        admin = User.getByID(session.get('user_id'), db_session).admin
+        print "Admin: %s" % admin
+
+    return render_template('viewitem.html', item=item, owner=owner, admin=admin)
 
 
 # Views for creating new data entities

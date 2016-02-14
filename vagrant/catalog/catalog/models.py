@@ -91,6 +91,10 @@ class User(Base):
     activated = Column(Boolean, default=True)
     admin = Column(Boolean, default=False)
 
+    def __repr__(self):
+        return "<User: name='%s', email='%s', id=%s, activated=%s, admin=%s>" \
+                % (self.name, self.email, self.id, self.activated, self.admin)
+
     @classmethod
     def getByID(cls, user_id, db_session):
         user = db_session.query(cls).filter_by(id=user_id).one()

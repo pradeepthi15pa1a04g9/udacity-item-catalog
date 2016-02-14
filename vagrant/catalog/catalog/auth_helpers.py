@@ -27,6 +27,11 @@ def owner_only(login_session, db_session, object_class):
         def decorated_function(*args, **kwargs):
             logged_in_user_id = login_session['user_id']
             
+            # Check if admin, in which case let through
+            logged_in_user = db_session.query(User).filter_by(id=logged_in_user_id).one()
+            if logged_in_user.admin:
+                return f(*args, **kwargs)
+
             # Extract from url parameters approprate arguments for database query
             params = dict()
             if 'item_id' in kwargs:
@@ -43,6 +48,7 @@ def owner_only(login_session, db_session, object_class):
 
             if item_or_tag.user_id != logged_in_user_id:
                 abort(403)
+
             return f(*args, **kwargs)
         return decorated_function
     return decorator
