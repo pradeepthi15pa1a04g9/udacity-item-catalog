@@ -6,7 +6,7 @@ Description
 -------------
 A web application that provides a list of items within a variety of categories as well as providing a user registration and authentication system. Registered users will have the ability to post, edit and delete their own items.
 
-Running the app with vagrant
+Test-driving the app with vagrant
 -------------
 (Using $repo to refer to the path of the repository)
 
@@ -16,12 +16,12 @@ Running the app with vagrant
 4. Download your Oauth client secret json file and rename it to `client_secrets.json`, placing it in `$repo/vagrant/catalog/instance/`.
     - If don't have this file, see the following tutorial video:
         + [https://www.youtube.com/watch?v=8aGoty0VXgw](https://www.youtube.com/watch?v=8aGoty0VXgw)
-5. Within `$repo/vagrant/catalog/`, run `python populatedb.py` to create the database and populate it with tags and items.
-6. Launch the Vagrant VM with the command `vagrant up` anywhere under `$repo/vagrant`.
-7. Use the command `vagrant ssh` to ssh into the VM.
-8. In the VM, go to `/vagrant/catalog/` and run `python runserver.py`.
+5. Launch the Vagrant VM with the command `vagrant up` anywhere under `$repo/vagrant`.
+6. Use the command `vagrant ssh` to ssh into the VM.
+7. In the VM, go to `/vagrant/catalog/` and run `python populatedb.py` to create the database and populate it with tags and items.
+8. In `/vagrant/catalog/` and run `python runserver.py` to start the server.
 9. In your browser, navigate to [http://localhost:5000](http://localhost:5000).
-10. Sign in with Google to experience full functionality.
+10. Sign in with Google to experience full functionality. Note that the first user you sign in with will be considered the owner of all the items and tags created by `populatedb.py`. Sign out and sign in with a second user to verify that users cannot change other users' items or tags.
 
 Admin interface
 -------------
