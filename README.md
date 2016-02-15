@@ -64,7 +64,7 @@ An atom feed of the latest items can be accessed at /catalog/recent.atom .
 
 Logging
 --------------
-Creation, deletion and editing of tags and items is recorded in a log file, configured by default as `catalog.log` in $repo/vagrant/catalog/ .
+Creation, deletion and editing of tags and items is recorded in a log file, configured by default as `catalog.log` in `$repo/vagrant/catalog/`.
 
 Third-party code
 --------------
