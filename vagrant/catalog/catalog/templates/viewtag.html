@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Category: {{ tag.name }}</title>
-    </head>
+{% extends "base.html" %}
 
-    <body>
+{% block title %}Category: {{ tag.name }}{% endblock %}
+
+{% block body %}
 
         <h1>Category: {{ tag.name }}</h1>
         <ul>
@@ -31,6 +29,4 @@
         </p>
         {% endif %}
 
-    </body>
-
-</html> 
+{% endblock %}

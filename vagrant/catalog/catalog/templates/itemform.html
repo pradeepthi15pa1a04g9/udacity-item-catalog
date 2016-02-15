@@ -1,19 +1,16 @@
-<!DOCTYPE html>
-<html>
-    
-    {% with %}
-        {% if action == 'newItem' %}
-            {% set title_verb = 'New' %}
-        {% elif action == 'editItem' %}
-            {% set title_verb = 'Edit' %}
-        {% endif %}
-    <head>
-        <title>{{ title_verb }} Item</title>
-    </head>
+{% extends "base.html" %}
 
-    <body>
+{% if action == 'newItem' %}
+    {% set title_verb = 'New' %}
+{% elif action == 'editItem' %}
+    {% set title_verb = 'Edit' %}
+{% endif %}
+
+{% block title %}{{ title_verb }} Item{% endblock %}
+
+{% block body %}
+
         <h1>{{ title_verb }} Item</h1>
-    {% endwith %}
 
         <form method="POST" action="{% if action == 'newItem' %}{{ url_for('newItem') }}{% elif action == 'editItem' %}{{ url_for('editItem', item_name=item.name, item_id=item.id) }}{% endif %}">
             {{ form.csrf_token }}
@@ -42,6 +39,4 @@
             <div><input type="submit" value="Submit"></div>
         </form>
 
-    </body>
-
-</html> 
+{% endblock %} 

@@ -1,8 +1,10 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Catalog</title>
-    </head>
+{% extends "base.html" %}
+
+{% set pagename = 'home' %}
+
+{% block title %}Catalog{% endblock %}
+
+{% block body %}
 
     <body>
         <h1>Categories</h1>
@@ -42,6 +44,4 @@
         {% endfor %}
         </ul>
 
-    </body>
-
-</html> 
+{% endblock %}

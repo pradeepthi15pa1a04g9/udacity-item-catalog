@@ -1,19 +1,16 @@
-<!DOCTYPE html>
-<html>
-    
-    {% with %}
-        {% if action == 'deleteItem' %}
-            {% set target_type = 'Item' %}
-        {% elif action == 'deleteTag' %}
-            {% set target_type = 'Tag' %}
-        {% endif %}
-    <head>
-        <title>Delete {{ target_type }}: {{ deleted.name }}?</title>
-    </head>
+{% extends "base.html" %}
 
-    <body>
+{% if action == 'deleteItem' %}
+    {% set target_type = 'Item' %}
+{% elif action == 'deleteTag' %}
+    {% set target_type = 'Tag' %}
+{% endif %}
+
+{% block title %}Delete {{ target_type }}: {{ deleted.name }}?{% endblock %}
+
+{% block body %}
+
         <h1>Delete {{ target_type }}: {{ deleted.name }}?</h1>
-    {% endwith %}
 
         <form method="POST" action="{% if action == 'deleteTag' %}{{ url_for('deleteTag', tag_name=deleted.name) }}{% elif action == 'deleteItem' %}{{ url_for('deleteItem', item_name=deleted.name, item_id=deleted.id) }}{% endif %}">
             {{ form.csrf_token }}            
@@ -24,6 +21,4 @@
             <div><input type="submit" value="Delete"></div>
         </form>
 
-    </body>
-
-</html> 
+{% endblock %}

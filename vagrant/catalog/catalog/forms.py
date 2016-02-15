@@ -22,7 +22,8 @@ class ItemForm(MyBaseForm):
                        [validators.Length(min=3, max=25)])
     description = TextAreaField('Item Description',
                                 [validators.Length(max=200)])
-    picture_url = StringField('Picture URL', [validators.URL(),])
+    picture_url = StringField('Picture URL', 
+                              [validators.Optional(), validators.URL(),])
     tags = SelectMultipleField('Categories')
 
 class BlankForm(MyBaseForm):

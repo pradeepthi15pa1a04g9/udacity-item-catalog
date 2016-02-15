@@ -1,16 +1,19 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Login</title>
+{% extends "base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block head_scripts %}
 
         <!--LOAD PRE-REQUISITES FOR GOOGLE SIGN IN -->
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+        <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script> -->
         <script src="//apis.google.com/js/platform.js?onload=start"> </script>
         <!-- END PRE-REQUISITES FOR GOOGLE SIGN IN -->
-    
-    </head>
 
-    <body>
+{% endblock %}
+
+{% block body %}
+        <div class="page-header"><h1>Sign in with Google+</h1></div>
+
         {{ form.csrf_token }}
 
         <!-- GOOGLE PLUS SIGN IN BUTTON-->  
@@ -30,6 +33,9 @@
 
         <div id="error" class="error"></div>
 
+{% endblock %}
+
+{% block end_scripts %}
         <script>
         var redirect_next = '{{ next }}'
 
@@ -73,7 +79,4 @@
             }
         }
         </script>
-
-    </body>
-
-</html> 
+{% endblock %}
