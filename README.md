@@ -2,15 +2,32 @@ udacity-item-catalog
 =============
 Forked from: udacity/rdb-fullstack
 
+Running the app with vagrant
+-------------
+(Using $repo to refer to the path of the repository)
+
+1. Install Vagrant and VirtualBox
+2. Clone this repository
+3. Create a directory `$repo/vagrant/catalog/instance/`, and within it a blank file `config.py`. This can be used to hold instance specific config, overriding the testing config variables.
+4. Download your Oauth client secret json file and rename it to `client_secrets.json`, placing it in `$repo/vagrant/catalog/instance/`.
+    - If don't have this file, see the following tutorial videos:
+        + 
+5. Within `$repo/vagrant/catalog/`, run `python populatedb.py` to create the database and populate it with tags and items.
+6. Launch the Vagrant VM with the command `vagrant up` anywhere under `$repo/vagrant`.
+7. Use the command `vagrant ssh` to ssh into the VM.
+8. In the VM, go to `/vagrant/catalog/` and run `python runserver.py`.
+9. In your browser, navigate to [http://localhost:5000](http://localhost:5000).
+10. Sign in with Google to experience full functionality.
+
 Admin interface
 -------------
-The admin interface can be found at `/admin/`. This allows the admin to view a table of information about users, and to activate and deactivate users.
+The admin interface can be found at `/admin/`. This allows the admin to view a table of information about users, and to activate and deactivate users. Deactivated users can no longer add, edit or delete items or tags, whereas activated users can add items and tags, and can edit and delete their own items and tags.
 
 Admin users can also edit and delete any item or category, regardless of ownership.
 
 Admin privileges script
 -------------
-To make a user into an admin, use the script `make_admin.py` in `/vagrant/catalog`, specifying either `revoke` or `grant` and the email address of the relevant user, and then follow the prompts. For example:
+To make a user into an admin, use the script `make_admin.py` in `$repo/vagrant/catalog/`, specifying either `revoke` or `grant` and the email address of the relevant user, and then follow the prompts. For example:
 
 ```
 vagrant@vagrant-ubuntu-trusty-32:/vagrant/catalog$ python make_admin.py grant example@example.com
@@ -47,7 +64,7 @@ An atom feed of the latest items can be accessed at /catalog/recent.atom .
 
 Logging
 --------------
-Creation, deletion and editing of tags and items is recorded in a log file, configured by default as `catalog.log` in /vagrant/catalog/ .
+Creation, deletion and editing of tags and items is recorded in a log file, configured by default as `catalog.log` in $repo/vagrant/catalog/ .
 
 Third-party code
 --------------
