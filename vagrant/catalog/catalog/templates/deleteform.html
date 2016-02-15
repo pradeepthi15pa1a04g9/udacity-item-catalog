@@ -10,15 +10,15 @@
 
 {% block body %}
 
-        <h1>Delete {{ target_type }}: {{ deleted.name }}?</h1>
+        <div class="page-header"><h1>Delete {{ target_type }}: {{ deleted.name }}?</h1></div>
 
         <form method="POST" action="{% if action == 'deleteTag' %}{{ url_for('deleteTag', tag_name=deleted.name) }}{% elif action == 'deleteItem' %}{{ url_for('deleteItem', item_name=deleted.name, item_id=deleted.id) }}{% endif %}">
             {{ form.csrf_token }}            
             {% if form.csrf_token.errors %}
-            <div class="warning">You have submitted an invalid CSRF token</div>
+            <div class="alert alert-danger" role="alert">You have submitted an invalid CSRF token.</div>
             {% endif %}
 
-            <div><input type="submit" value="Delete"></div>
+            <div><input type="submit" value="Delete"  class="btn btn-default"></div>
         </form>
 
 {% endblock %}
