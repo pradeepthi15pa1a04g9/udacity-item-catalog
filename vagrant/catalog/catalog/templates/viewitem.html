@@ -4,47 +4,39 @@
 
 {% block body %}
 
-        <h1>Item: {{ item.name }}</h1>
+        
+        <div class="page-header"><h1>Item: {{ item.name }}</h1></div>
 
-        <h2>Description</h2>
+        <div class="row">            
+            <div class="col-md-4">
+                {% if item.picture_url %}
+                <p><img src="{{ item.picture_url }}" class="img-responsive img-rounded"></p>
+                {% else %}
+                <p>No image.</p>
+                {% endif %}
+            </div>
+            <div class="col-md-8">
 
-        {% if item.description %}
+                <p>
+                {% for tag in item.tags %}
+                    <a href="{{ url_for('viewTag', tag_name=tag.name) }}" class="label label-info">{{ tag.name }}</a></li>
+                {% endfor %}
+                </p>
 
-        <p>{{ item.description }}</p>
+                {% if item.description %}
+                <p>{{ item.description }}</p>
+                {% else %}
+                <p>No description.</p>
+                {% endif %}
 
-        {% else %}
-
-        <p>No description.</p>
-
-        {% endif %}
-
-        <h2>Picture</h2>
-
-        {% if item.picture_url %}
-
-        <p><img src="{{ item.picture_url }}"></p>
-
-        {% else %}
-
-        <p>No image.</p>
-
-        {% endif %}
-
-        <h2>Categories</h2>
-        <ul>
-        {% for tag in item.tags %}
-            <li><a href="{{ url_for('viewTag', tag_name=tag.name) }}">{{ tag.name }}</a></li>
-        {% else %}
-            <li>No categories here.</li>
-        {% endfor %}
-        </ul>
-
-
-        {% if logged_in and ((owner and user.activated) or user.admin) %}
-        <p>
-            <a href="{{ url_for('editItem', item_name=item.name, item_id=item.id) }}">Edit</a><br>
-            <a href="{{ url_for('deleteItem', item_name=item.name, item_id=item.id) }}">Delete</a>
-        </p>
-        {% endif %}
+                {% if logged_in and ((owner and user.activated) or user.admin) %}
+                <p>
+                    <a href="{{ url_for('editItem', item_name=item.name, item_id=item.id) }}" class="btn btn-primary">Edit</a>
+                    <a href="{{ url_for('deleteItem', item_name=item.name, item_id=item.id) }}" class="btn btn-primary">Delete</a>
+                </p>
+                {% endif %}
+        
+            </div>
+        </div>
 
 {% endblock %}
