@@ -6,7 +6,7 @@
 
 {% block body %}
 
-        <h1>{{ action|capitalize() }} user: {{ user.name }}?</h1>
+        <div class="page-header"><h1>{{ action|capitalize() }} user: {{ user.name }}?</h1></div>
 
         <form method="POST" action="{{ url_for('user_activation', user_id=user.id) }}">
             {{ form.csrf_token }}            
@@ -14,13 +14,13 @@
             <div class="warning">You have submitted an invalid CSRF token</div>
             {% endif %}
 
-            <div><input type="submit" value="{{ action|capitalize() }}"></div>
+            <div><input type="submit" class="btn btn-default" value="{{ action|capitalize() }}"></div>
 
         </form>
 
-        <h2> User info </h2>
+        <div class="page-header"><h2>User info</h2></div>
 
-         <table border="1">
+         <table class="table table-striped">
             <thead>
                 <tr>
                     <td>id</td>
