@@ -16,3 +16,7 @@ body {
 .theme-showcase .navbar .container {
   width: auto;
 }
+
+.login-hidden-error {
+	display: none;
+}

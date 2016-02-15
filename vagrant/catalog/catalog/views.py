@@ -446,6 +446,11 @@ def showLogin():
     form = LoginCSRFForm(request.form, meta={'csrf_context': session})
     return render_template('login.html', form=form, next=next)
 
+@app.route('/logout/')
+@login_required(session)
+def showLogout():
+    return render_template('logout.html')
+
 @app.route('/gconnect', methods=['POST'])
 def gconnect():
     """View to log in using Google's Oauth2 service"""
@@ -525,12 +530,11 @@ def gconnect():
     session['user_id'] = user_id
 
     output = ''
-    output += '<h1>Welcome, '
-    output += session['username']
-    output += '!</h1>'
-    output += '<img src="'
-    output += session['picture']
-    output += ' " style = "width: 300px; height: 300px;border-radius: 150px;-webkit-border-radius: 150px;-moz-border-radius: 150px;"> '
+    output += 'Welcome'
+    if session['username']:
+        output += ', '
+        output += session['username']
+    output += '.'
     flash("you are now logged in as %s" % session['username'])
     print "done!"
     response = make_response(json.dumps(output))
@@ -540,10 +544,10 @@ def gconnect():
 
 @app.route('/gdisconnect')
 def gdisconnect():
-    access_token = session['access_token']
+    access_token = session.get('access_token')
     print 'In gdisconnect access token is %s', access_token
     print 'User name is: ' 
-    print session['username']
+    print session.get('username')
     if access_token is None:
         print 'Access Token is None'
         response = make_response(json.dumps('Current user not connected.'), 401)
