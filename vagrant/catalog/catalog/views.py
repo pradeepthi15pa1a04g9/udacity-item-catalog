@@ -412,7 +412,7 @@ def recentAtom():
                     feed_url=request.url,
                     url=request.host_url,
                     subtitle="The most recently created catalog items.",)
-    for item in db_session.query(Item).order_by(Item.updated_on).limit(10):
+    for item in db_session.query(Item).order_by(Item.updated_on.desc()).limit(10):
         categories = [{'term': tag.name.lower(),
                        'label': tag.name} for tag in item.tags]
         feed.add(title=item.name,
