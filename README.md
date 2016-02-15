@@ -10,8 +10,8 @@ Running the app with vagrant
 2. Clone this repository
 3. Create a directory `$repo/vagrant/catalog/instance/`, and within it a blank file `config.py`. This can be used to hold instance specific config, overriding the testing config variables.
 4. Download your Oauth client secret json file and rename it to `client_secrets.json`, placing it in `$repo/vagrant/catalog/instance/`.
-    - If don't have this file, see the following tutorial videos:
-        + 
+    - If don't have this file, see the following tutorial video:
+        + [https://www.youtube.com/watch?v=8aGoty0VXgw](https://www.youtube.com/watch?v=8aGoty0VXgw)
 5. Within `$repo/vagrant/catalog/`, run `python populatedb.py` to create the database and populate it with tags and items.
 6. Launch the Vagrant VM with the command `vagrant up` anywhere under `$repo/vagrant`.
 7. Use the command `vagrant ssh` to ssh into the VM.
