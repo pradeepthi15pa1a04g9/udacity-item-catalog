@@ -4,7 +4,7 @@
 
 {% block body %}
 
-        <h1>Category: {{ tag.name }}</h1>
+        <div class="page-header"><h1>Category: {{ tag.name }}</h1></div>
         <ul>
         {% for item in tag.items %}
             <li>
@@ -24,8 +24,8 @@
 
         {% if logged_in and ((owner and user.activated) or user.admin) %}
         <p>
-            <a href="{{ url_for('editTag', tag_name=tag.name) }}">Edit</a><br>
-            <a href="{{ url_for('deleteTag', tag_name=tag.name) }}">Delete</a>
+            <a href="{{ url_for('editTag', tag_name=tag.name) }}" class="btn btn-primary">Edit</a><br>
+            <a href="{{ url_for('deleteTag', tag_name=tag.name) }}" class="btn btn-primary">Delete</a>
         </p>
         {% endif %}
 
