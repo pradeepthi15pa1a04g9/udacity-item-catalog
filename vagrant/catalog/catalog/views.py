@@ -130,7 +130,7 @@ def newTag():
             form.tag_name.errors.append(
                 'A tag already exists with that name.')
 
-    return render_template('tagform.html', form=form, action="newTag")
+    return render_template('tagform.html', form=form, action="newTag", logged_in=True)
 
 @app.route('/catalog/items/new/', methods=['GET', 'POST'])
 @login_required(session)
@@ -172,7 +172,7 @@ def newItem():
 
         return redirect(url_for('index'))
 
-    return render_template('itemform.html', form=form, action='newItem')
+    return render_template('itemform.html', form=form, action='newItem', logged_in=True)
 
 
 # Views for editing existing entities
@@ -220,7 +220,8 @@ def editTag(tag_name):
     return render_template('tagform.html',
                            form=form,
                            action="editTag",
-                           tag=tag)
+                           tag=tag,
+                           logged_in=True)
 
 
 @app.route('/catalog/items/edit/<item_name>-<int:item_id>/',
@@ -277,7 +278,8 @@ def editItem(item_name, item_id):
     return render_template('itemform.html',
                             form=form,
                             action='editItem',
-                            item=item)
+                            item=item,
+                            logged_in=True)
 
 # Views for deleting existing entities
 
@@ -312,7 +314,8 @@ def deleteTag(tag_name):
     return render_template('deleteform.html',
                             form=form,
                             action='deleteTag',
-                            deleted=tag)
+                            deleted=tag,
+                            logged_in=True)
 
 @app.route('/catalog/items/delete/<item_name>-<int:item_id>/',
            methods=['GET', 'POST'])
@@ -346,7 +349,8 @@ def deleteItem(item_name, item_id):
     return render_template('deleteform.html',
                             form=form,
                             action='deleteItem',
-                            deleted=item)
+                            deleted=item,
+                            logged_in=True)
 
 
 # Views for JSON API
@@ -572,7 +576,7 @@ def gdisconnect():
 @admin_only(session, db_session)
 def admin():
     users = db_session.query(User).all()
-    return render_template('admin.html', users=users)
+    return render_template('admin.html', users=users, logged_in=True)
 
 @app.route('/admin/activation/<int:user_id>/', methods=['POST', 'GET'])
 @login_required(session)
@@ -607,4 +611,5 @@ def user_activation(user_id):
     return render_template('activationform.html',
                             form=form,
                             action=action,
-                            user=user)
+                            user=user,
+                            logged_in=True)
