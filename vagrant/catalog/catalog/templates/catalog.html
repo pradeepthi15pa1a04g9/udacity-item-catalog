@@ -5,43 +5,52 @@
 {% block title %}Catalog{% endblock %}
 
 {% block body %}
+    
+        <div class="row">
+            <div class="col-md-3">
 
-    <body>
-        <h1>Categories</h1>
+                <div class="page-header"><h1>Categories</h1></div>
 
-        {% if logged_in and ( user.admin or user.activated ) %}
-        <p><a href="{{ url_for('newTag') }}">New Category</a></p>
-        {% endif %}
-
-        <ul>
-        {% for tag in tags %}
-            <li><a href="{{ url_for('viewTag', tag_name=tag.name) }}">{{ tag.name }}</a></li>
-        {% else %}
-            <li>No categories here.</li>
-        {% endfor %}
-        </ul>
-
-        <h1>Items</h1>
-
-        {% if logged_in and ( user.admin or user.activated ) %}
-        <p><a href="{{ url_for('newItem') }}">New Item</a></p>
-        {% endif %}
-
-        <ul>
-        {% for item in items %}
-            <li>
-                <a href="{{ url_for('viewItem', item_name=item.name, item_id=item.id) }}">{{ item.name }}</a>
-                {% if item.tags %}{% set comma = joiner(", ") %}
-                (
-                    {% for tag in item.tags %}
-                        {{- comma() }}<a href="{{ url_for('viewTag', tag_name=tag.name) }}">{{ tag.name }}</a>
-                    {%- endfor %}
-                )
+                {% if logged_in and ( user.admin or user.activated ) %}
+                <p><a href="{{ url_for('newTag') }}" class="btn btn-primary">New Category</a></p>
                 {% endif %}
-            </li>
-        {% else %}
-            <li>No items here.</li>
-        {% endfor %}
-        </ul>
+
+                <ul>
+                {% for tag in tags %}
+                    <li><a href="{{ url_for('viewTag', tag_name=tag.name) }}">{{ tag.name }}</a></li>
+                {% else %}
+                    <li>No categories here.</li>
+                {% endfor %}
+                </ul>
+            
+            </div>
+
+            <div class="col-md-9">
+                
+                <div class="page-header"><h1>Items</h1></div>
+
+                {% if logged_in and ( user.admin or user.activated ) %}
+                <p><a href="{{ url_for('newItem') }}" class="btn btn-primary">New Item</a></p>
+                {% endif %}
+
+                <ul>
+                {% for item in items %}
+                    <li>
+                        <a href="{{ url_for('viewItem', item_name=item.name, item_id=item.id) }}">{{ item.name }}</a>
+                        {% if item.tags %}{% set comma = joiner(", ") %}
+                        (
+                            {% for tag in item.tags %}
+                                {{- comma() }}<a href="{{ url_for('viewTag', tag_name=tag.name) }}">{{ tag.name }}</a>
+                            {%- endfor %}
+                        )
+                        {% endif %}
+                    </li>
+                {% else %}
+                    <li>No items here.</li>
+                {% endfor %}
+                </ul>
+
+            </div>
+        </div>
 
 {% endblock %}
