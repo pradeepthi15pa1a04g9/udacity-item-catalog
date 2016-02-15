@@ -47,7 +47,7 @@
             {% if not logged_in %}
             <li><a href="{{ url_for('showLogin') }}">Sign in</a></li>
             {% else %}
-            <li><a href="{{ url_for('gdisconnect') }}">Sign out</a></li>
+            <li><a href="{{ url_for('showLogout') }}">Sign out</a></li>
             {% endif %}
           </ul>
         </div><!--/.nav-collapse -->
