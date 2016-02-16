@@ -39,7 +39,11 @@ def index():
     if logged_in:
         user = db_session.query(User).filter_by(id=session['user_id']).one()
 
-    return render_template('catalog.html', tags=tags, items=items, logged_in=logged_in, user=user)
+    return render_template('catalog.html',
+                            tags=tags,
+                            items=items,
+                            logged_in=logged_in,
+                            user=user)
 
 # Views for viewing data in web page form
 
@@ -68,7 +72,11 @@ def viewTag(tag_name):
     if session.get('user_id'):
         user = User.getByID(session.get('user_id'), db_session)
 
-    return render_template('viewtag.html', tag=tag, logged_in=logged_in, owner=owner, user=user)
+    return render_template('viewtag.html',
+                            tag=tag,
+                            logged_in=logged_in,
+                            owner=owner,
+                            user=user)
 
 @app.route('/catalog/items/view/<item_name>-<int:item_id>/')
 def viewItem(item_name, item_id):
@@ -96,7 +104,11 @@ def viewItem(item_name, item_id):
     if session.get('user_id'):
         user = User.getByID(session.get('user_id'), db_session)
 
-    return render_template('viewitem.html', item=item, logged_in=logged_in, owner=owner, user=user)
+    return render_template('viewitem.html',
+                            item=item,
+                            logged_in=logged_in,
+                            owner=owner,
+                            user=user)
 
 
 # Views for creating new data entities
@@ -130,7 +142,10 @@ def newTag():
             form.tag_name.errors.append(
                 'A tag already exists with that name.')
 
-    return render_template('tagform.html', form=form, action="newTag", logged_in=True)
+    return render_template('tagform.html',
+                            form=form,
+                            action="newTag",
+                            logged_in=True)
 
 @app.route('/catalog/items/new/', methods=['GET', 'POST'])
 @login_required(session)
@@ -172,7 +187,10 @@ def newItem():
 
         return redirect(url_for('index'))
 
-    return render_template('itemform.html', form=form, action='newItem', logged_in=True)
+    return render_template('itemform.html',
+                            form=form,
+                            action='newItem',
+                            logged_in=True)
 
 
 # Views for editing existing entities
@@ -412,7 +430,9 @@ def recentAtom():
                     feed_url=request.url,
                     url=request.host_url,
                     subtitle="The most recently created catalog items.",)
-    for item in db_session.query(Item).order_by(Item.updated_on.desc()).limit(10):
+    for item in db_session.query(Item)                      \
+                          .order_by(Item.updated_on.desc()) \
+                          .limit(10):
         categories = [{'term': tag.name.lower(),
                        'label': tag.name} for tag in item.tags]
         feed.add(title=item.name,
@@ -464,7 +484,8 @@ def gconnect():
     code = form.code.data
     try:
         # Exchange authorisation code for credentials object
-        oauth_flow = flow_from_clientsecrets('instance/client_secrets.json', scope='')
+        oauth_flow = flow_from_clientsecrets('instance/client_secrets.json',
+                                             scope='')
         oauth_flow.redirect_uri = 'postmessage'
         credentials = oauth_flow.step2_exchange(code)
     except FlowExchangeError:
@@ -503,8 +524,8 @@ def gconnect():
     stored_credentials = session.get('access_token')
     stored_gplus_id = session.get('gplus_id')
     if stored_credentials is not None and gplus_id == stored_gplus_id:
-        response = make_response(json.dumps('Current user is already connected.'),
-                                 200)
+        response = make_response(
+            json.dumps('Current user is already connected.'), 200)
         response.headers['Content-Type'] = 'application/json'
         return response
 
@@ -550,10 +571,12 @@ def gdisconnect():
     print session.get('username')
     if access_token is None:
         print 'Access Token is None'
-        response = make_response(json.dumps('Current user not connected.'), 401)
+        response = make_response(json.dumps('Current user not connected.'),
+                                 401)
         response.headers['Content-Type'] = 'application/json'
         return response
-    url = 'https://accounts.google.com/o/oauth2/revoke?token=%s' % session['access_token']
+    url = ('https://accounts.google.com/o/oauth2/revoke?token=%s'
+           % session['access_token'])
     h = httplib2.Http()
     result = h.request(url, 'GET')[0]
     print 'result is '
@@ -565,12 +588,14 @@ def gdisconnect():
         del session['email']
         del session['picture']
         del session['user_id']
-        response = make_response(json.dumps('Successfully disconnected.'), 200)
+        response = make_response(json.dumps('Successfully disconnected.'),
+                                 200)
         response.headers['Content-Type'] = 'application/json'
         return response
     else:
     
-        response = make_response(json.dumps('Failed to revoke token for given user.', 400))
+        response = make_response(
+            json.dumps('Failed to revoke token for given user.', 400))
         response.headers['Content-Type'] = 'application/json'
         return response
 
@@ -593,7 +618,8 @@ def user_activation(user_id):
         # throw a 404.
         abort(404)
 
-    # If user is an admin, then you aren't allowed to activate/deactivate them.
+    # If user is an admin, then you aren't allowed to
+    # activate/deactivate them.
     if user.admin:
         abort(403)
 
