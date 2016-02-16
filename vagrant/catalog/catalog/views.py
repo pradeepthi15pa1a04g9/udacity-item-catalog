@@ -464,7 +464,10 @@ def showLogin():
         next = url_for('index')
     next = make_url_relative(next)
     form = LoginCSRFForm(request.form, meta={'csrf_context': session})
-    return render_template('login.html', form=form, next=next)
+    return render_template('login.html',
+                            form=form,
+                            next=next,
+                            client_id=CLIENT_ID)
 
 @app.route('/logout/')
 @login_required(session)
