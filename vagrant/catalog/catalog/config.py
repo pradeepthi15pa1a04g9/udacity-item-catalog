@@ -9,11 +9,13 @@ CSRF_SECRET_KEY = b'development csrf key'
 # Non-standard, specific to this app
 ENABLE_LOGGING = True
 
-CATALOG_LOGFILE = os.path.abspath(
-    os.path.join(
-        os.path.dirname(__file__),
-        '..',
-        'catalog.log'))
+# CATALOG_LOGFILE = os.path.abspath(
+#     os.path.join(
+#         os.path.dirname(__file__),
+#         '..',
+#         'catalog.log'))
+
+CATALOG_LOGFILE = '/tmp/catalog.log'
 
 # Default sqlite database
 
