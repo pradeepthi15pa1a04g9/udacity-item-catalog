@@ -5,10 +5,15 @@ database tables."""
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from catalog import app
 
-dbfilename = 'catalog.db'
+dbfilename = app.config.get('DB_FILE')
+db_url = app.config.get('DB_URL')
+if not db_url:
+    db_url = 'sqlite:///' + dbfilename
 
-engine = create_engine('sqlite:///%s' % dbfilename)
+engine = create_engine(db_url)
+
 
 DBSession = sessionmaker(bind=engine)
 db_session = DBSession() # Imported by view module to make queries

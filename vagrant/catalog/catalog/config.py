@@ -6,3 +6,9 @@ CSRF_SECRET_KEY = b'development csrf key'
 
 # Non-standard, specific to this app
 CATALOG_LOGFILE = 'catalog.log'
+
+# Default sqlite database
+
+DB_FILE = 'catalog.db'
+
+DB_URL = ''

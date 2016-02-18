@@ -7,14 +7,15 @@ import os
 # Remove database if it exists
 
 print "Checking for existing sqlite database."
-script_dir = os.path.dirname(os.path.realpath(__file__))
-db_file_path = os.path.join(script_dir, dbfilename)
+if dbfilename:
+    script_dir = os.path.dirname(os.path.realpath(__file__))
+    db_file_path = os.path.join(script_dir, dbfilename)
 
-if os.path.isfile(db_file_path):
-    print "Old database found. Deleting."
-    os.remove(db_file_path)
-else:
-    print "No old database found."
+    if os.path.isfile(db_file_path):
+        print "Old database found. Deleting."
+        os.remove(db_file_path)
+    else:
+        print "No old database found."
 
 # Create the database
 
