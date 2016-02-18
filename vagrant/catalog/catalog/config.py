@@ -5,6 +5,7 @@ SECRET_KEY = 'development key'
 CSRF_SECRET_KEY = b'development csrf key'
 
 # Non-standard, specific to this app
+ENABLE_LOGGING = True
 CATALOG_LOGFILE = 'catalog.log'
 
 # Default sqlite database
