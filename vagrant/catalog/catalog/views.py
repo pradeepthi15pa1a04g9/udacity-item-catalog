@@ -495,7 +495,7 @@ def gconnect():
     code = form.code.data
     try:
         # Exchange authorisation code for credentials object
-        oauth_flow = flow_from_clientsecrets('instance/client_secrets.json',
+        oauth_flow = flow_from_clientsecrets(client_secret_path,
                                              scope='')
         oauth_flow.redirect_uri = 'postmessage'
         credentials = oauth_flow.step2_exchange(code)
