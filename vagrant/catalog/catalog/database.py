@@ -5,6 +5,7 @@ database tables."""
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm.scoping import scoped_session
 from catalog import app
 
 dbfilename = app.config.get('DB_FILE')
@@ -14,9 +15,12 @@ if not db_url:
 
 engine = create_engine(db_url)
 
-
-DBSession = sessionmaker(bind=engine)
-db_session = DBSession() # Imported by view module to make queries
+if db_url.startswith('sqlite'):
+	# to prevent threading related errors in mod_wsgi
+	db_session = scoped_session(sessionmaker(bind=engine))
+else:
+	DBSession = sessionmaker(bind=engine)
+	db_session = DBSession() # Imported by view module to make queries
 
 Base = declarative_base() # Imported by the models module as base class for models
 
