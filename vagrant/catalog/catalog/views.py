@@ -4,6 +4,8 @@ from sqlalchemy.orm.exc import MultipleResultsFound, NoResultFound
 from sqlalchemy.exc import IntegrityError
 from werkzeug.contrib.atom import AtomFeed
 
+import os
+
 from . import app
 
 from .forms import TagForm, ItemForm, BlankForm, LoginCSRFForm
@@ -451,8 +453,14 @@ def recentAtom():
 
 # Views for login and auth
 
+# Necessary to avoid problems with varying current working directory
+instance_dir = os.path.join(os.path.dirname(__file__),
+                            '..', 'instance')
+client_secret_path = os.path.abspath(os.path.join(instance_dir,
+                                                  'client_secrets.json'))
+
 CLIENT_ID = json.loads(
-        open('instance/client_secrets.json', 'r').read()
+        open(client_secret_path, 'r').read()
     )['web']['client_id']
 
 @app.route('/login/')
