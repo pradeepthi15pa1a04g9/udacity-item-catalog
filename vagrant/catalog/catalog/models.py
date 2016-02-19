@@ -88,7 +88,7 @@ class User(Base):
     id = Column(Integer, primary_key = True)
     name = Column(String(80), nullable = False)
     email = Column(String(80), nullable = False)
-    picture = Column(String(80))
+    picture = Column(String(250))
     activated = Column(Boolean, default=True)
     admin = Column(Boolean, default=False)
 
